@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Receipt Input Form - TBW Accounting System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="./css/sk-folding.css" />
+    <style type="text/css">
+      .side_bar
+      {
+          position: -webkit-sticky;
+          /* Safariに対応する */
+          position:         sticky;
+          /* 要素を固定/解除する */
+          top: 2vh;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <header class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">領収証入力フォーム</h1>
+          <h2 class="subtitle">TBW Accounting System</h2>
+        </div>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <!-- 注意文 -->
+        <article class="message is-warning" id="warning_msg">
+          <div class="message-header">
+            <p>注意</p>
+            <button class="delete" id="delete-button" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+            領収証<b>１枚</b>に対して、フォームの入力は<b>1回</b>です！<br>
+            複数枚まとめての申請はダメ。ゼッタイ。
+          </div>
+        </article>
+
+        <form name="receipt_form" method="post" id="receipt-form" target="_self">
+          <!-- 但書 -->
+          <div class="field">
+            <label class="label">但し書き</label>
+            <div class="control">
+              <input type="text" name="writing" accept-charset="UTF-8" placeholder="領収証と同じ但し書き" class="input" required>
+            </div>
+          </div>
+
+          <!-- 立替者 -->
+          <!-- 名簿のデータベースから選択肢を入力したい -->
+          <div class="field">
+            <label class="label">立替者</label>
+            <div class="control">
+              <input class="input" type="text" name="person" accept-charset="UTF-8" placeholder="フルネーム。苗字と名前の間にスペース入れない。" required>
+            </div>
+          </div>
+
+          <!-- 分類 -->
+          <div class="field">
+            <label class="label">分類</label>
+            <div class="select">
+              <select name="class" required>
+                <option value="用具等購入費">用具等購入費</option>
+                <option value="大会参加連盟加盟費">大会参加連盟加盟費</option>
+                <option value="施設機材使用料">施設機材使用料</option>
+                <option value="謝礼費">謝礼費</option>
+                <option value="通信運搬費">通信運搬費</option>
+                <option value="印刷製本費">印刷製本費</option>
+                <option value="書籍費">書籍費</option>
+                <option value="宿泊費">宿泊費</option>
+                <option value="交通費">交通費</option>
+                <option value="その他支出">その他支出</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 区分 -->
+          <div class="field">
+            <label class="label">区分（デフォルト）</label>
+            <div class="select">
+              <select name="division">
+                <option value="翼">翼</option>
+                <option value="桁">桁</option>
+                <option value="フレーム">フレーム</option>
+                <option value="電装">電装</option>
+                <option value="フェアリング">フェアリング</option>
+                <option value="プロペラ">プロペラ</option>
+                <option value="CFRP">CFRP</option>
+                <option value="CNC">CNC</option>
+                <option value="パイロット">パイロット</option>
+                <option value="全体">全体</option>
+                <option value="鳥通">鳥通</option>
+                <option value="玄武">玄武</option>
+                <option value="文サ">文サ</option>
+                <option value="その他">その他</option>
+              </select>
+            </div>
+            <br>
+            <label class="checkbox"><input type="checkbox" name="is_apply" checked>
+              デフォルト値を適用</input></label>
+          </div>
+
+          <hr>
+
+          <p class="mb-4">以下、物品を1つずつ入力して下さい。</p>
+          <div class="columns">
+            <div class="column">
+              <div id="goods_form">
+                <div id="g0" class="box">
+                  <h1 class="is-size-4 mb-4">Item-0</h1>
+                  <!-- 物品名 -->
+                  <div class="field">
+                    <label class="label">物品名</label>
+                    <div class="control">
+                      <input class="input is-small" type="text" name="g0_name" accept-charset="UTF-8" required>
+                    </div>
+                  </div>
+
+                  <!-- 単価 -->
+                  <!-- 正の整数しか受け取らないようにしたい。正規表現 -->
+                  <div class="field">
+                    <label class="label">単　価</label>
+                    <div class="field has-addons">
+                      <span class="control button is-static is-small">¥</span>
+                      <p class="control">
+                        <input class="input is-small" type="number" name="g0_price" accept-charset="UTF-8" required>
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 数量 -->
+                  <div class="field">
+                    <label class="label">数　量</label>
+                    <div class="control">
+                      <input class="input is-small" type="number" name="g0_q" accept-charset="UTF-8" required>
+                    </div>
+                  </div>
+
+                  <!-- 区分 -->
+                  <div class="field">
+                    <label class="label">区　分</label>
+                    <div class="select">
+                      <select name="g0_div" required>
+                        <option value="翼">翼</option>
+                        <option value="桁">桁</option>
+                        <option value="フレーム">フレーム</option>
+                        <option value="電装">電装</option>
+                        <option value="フェアリング">フェアリング</option>
+                        <option value="プロペラ">プロペラ</option>
+                        <option value="CFRP">CFRP</option>
+                        <option value="CNC">CNC</option>
+                        <option value="パイロット">パイロット</option>
+                        <option value="全体">全体</option>
+                        <option value="鳥通">鳥通</option>
+                        <option value="玄武">玄武</option>
+                        <option value="文サ">文サ</option>
+                        <option value="その他">その他</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- 備考 -->
+                  <div class="field">
+                    <label class="label">備　考</label>
+                    <div class="control">
+                      <textarea class="textarea is-small" name="g0_note" rows="2" cols="40"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 追加・削除ボタン -->
+              <div class="mt-4">
+                <button type="button" id="add_button" class="button is-dark is-small">追加</button>
+                <button type="button" id="remove_button" class="button is-dark is-small">削除</button>
+              </div>
+
+              <!-- 日付・物品数・年月 -->
+              <input type="hidden" name="date" value="">
+              <input type="hidden" name="g_num" value="">
+              <input type="hidden" name="ym" value="">
+              <input type="hidden" name="mode" value="0">
+            </div>
+
+            <!-- 合計金額の表示 -->
+            <div class="column">
+              <article class="card side_bar">
+                <header class="card-header">
+                  <p class="card-header-title">合計金額</p>
+                </header>
+                <section class="card-content">
+                  <p class="content">
+                    <span class="is-size-3"><b>¥<span id="total">0</span></b></span><br>
+                    合計金額を確認して、送信して下さい。<br>
+                  </p>
+
+                  <button type="submit" class="button is-primary" id="submit-button">送信</button>
+                  <button type="button" class="button is-light" id="open-advice-button">金額が合わない</button>
+                </section>
+              </article>
+            </div>
+
+          </div>
+
+          <!-- 送信内容確認用のModal -->
+          <!-- <div class="modal" id="confirm-modal">
+            <div class="modal-background" id="confirm-modal-bg"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">内容確認</p>
+                <button type="button" class="delete" aria-label="close"
+                  onclick="switchModalDisplay('confirm_modal');"></button>
+              </header>
+              <section class="modal-card-body">
+                <p>以下の内容で登録します。</p>
+                <h1 class="is-size-4 mb-3 has-text-weight-semibold">領収証情報</h1>
+                <table class="table is-striped">
+                  <tbody>
+                    <tr>
+                      <td>但し書き</td>
+                      <td class="receipt-info"></td>
+                    </tr>
+                    <tr>
+                      <td>立替者</td>
+                      <td class="receipt-info"></td>
+                    </tr>
+                    <tr>
+                      <td>分類</td>
+                      <td class="receipt-info"></td>
+                    </tr>
+                    <tr>
+                      <td>区分</td>
+                      <td class="receipt-info"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <footer class="modal-card-foot">
+                <button type="submit" class="button is-primary">送信</button>
+                <button type="button" onclick="switchModalDisplay('confirm_modal');" class="button is-light">修正</button>
+              </footer>
+            </div>
+          </div> -->
+
+        </form>
+      </div>
+    </main>
+
+    <!-- 金額が合わないを選択時のModal -->
+    <div class="modal" id="total-fee-modal">
+      <div class="modal-background" id='advice-bg'></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">合計金額が合わない時</p>
+          <button class="delete" id='advice-delete-button' aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <h1 class="is-size-4 mb-3 has-text-weight-semibold">外税表記ではありませんか？</h1>
+          <p class="mb-6">外税表記だった為に消費税を含めていない可能性があります。その際は物品名を「消費税」として、消費税を登録して下さい。</p>
+          <h1 class="is-size-4 mb-3 has-text-weight-semibold">配送料は含まれていますか？</h1>
+          <p class="mb-6">配送料を含んでいない可能性があります。その際は物品名を「配送料」として、配送料を登録して下さい。</p>
+          <h1 class="is-size-4 mb-3 has-text-weight-semibold">ポイントを使ってませんか？</h1>
+          <p class="mb-6">ポイントにより減額された金額を計上していない可能性があります。その際は物品名を「ポイント」として、減額された金額をマイナス値を用いて登録して下さい。</p>
+        </section>
+        <footer class="modal-card-foot"></footer>
+      </div>
+    </div>
+    
+    <script type="module" src="./js/form.js" charset="UTF-8"></script>
+  </body>
+
+</html>

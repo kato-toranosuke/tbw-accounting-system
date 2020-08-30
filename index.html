@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Confirmation - TBW Accounting System</title>
+    <!-- <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+  </head>
+  <body>
+    <header class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">領収証入力フォーム</h1>
+          <h2 class="subtitle">TBW Accounting System</h2>
+        </div>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <div class="content">
+          <h1 class="is-size-4">確認事項</h1>
+          <p>領収証に以下の内容が記載されているか確認してして下さい。</p>
+          <ol>
+            <li>宛名欄に<b>「筑波大学つくば鳥人間の会」</b>と記載しましたか？</li>
+            <li>
+              <b>但し書き</b>を記載しましたか？
+              <span class="is-size-7">（但し書き欄がない場合は、宛名欄の下などの適当な場所に「但し、〇〇代」と記載して下さい。）</span>
+            </li>
+            <li>
+              担当者または会社の<b>印鑑</b>がありますか？
+              <span class="is-size-7">（印鑑が貰えなかった場合はOKです。）</span>
+            </li>
+            <li>
+              領収証の裏面に<b>立替者</b>の氏名を記載しましたか？
+              <span class="is-size-7">（事前に会計から受け取ったお金で支払った場合は、<b>「会」</b>と記載して下さい。）</span>
+            </li>
+          </ol>
+          <p>
+            以上の４点を満たしましたか？
+          </p>
+          <button type="button" name="yes" onclick="location.href='./form.html'" class="button is-primary is-small">はい</button>
+          <button type="button" name="no" onclick="location.href='./ohno.html'" class="button is-light is-small">いいえ</button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

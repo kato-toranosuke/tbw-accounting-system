@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
+  </head>
+
+  <body>
+    <header class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">領収証入力フォーム</h1>
+          <h2 class="subtitle">TBW Accounting System</h2>
+        </div>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <div class="content">
+          <h1 class="is-size-4">登録完了</h1>
+          <p>
+            領収証番号は <span class="is-size-5"><b><?= r_no ?></b></span> です。<br>
+            領収証の左上にこの番号を記載して、主会計に提出して下さい。
+          </p>
+          
+          <h3 class="is-size-6">最後に確認して下さい！</h3>
+          <p>
+          <ol>
+            <li>宛名欄に<b>「筑波大学つくば鳥人間の会」</b>と記載しましたか？</li>
+            <li>
+              <b>但し書き</b>を記載しましたか？
+              <span class="is-size-7">（但し書き欄がない場合は、宛名欄の下などの適当な場所に「但し、〇〇代」と記載して下さい。）</span>
+            </li>
+            <li>
+              担当者または会社の<b>印鑑</b>がありますか？
+              <span class="is-size-7">（印鑑が貰えなかった場合はOKです。）</span>
+            </li>
+            <li>
+              領収証の裏面に<b>立替者</b>の氏名を記載しましたか？
+              <span class="is-size-7">（事前に会計から受け取ったお金で支払った場合は、<b>「会」</b>と記載して下さい。）</span>
+            </li>
+          </ol>
+          </p>
+          <p><a href="http://tbwkaikei.php.xdomain.jp/index.html">別の領収証を登録する</a></p>
+        </div>
+      </div>
+    </main>
+  </body>
+
+</html>

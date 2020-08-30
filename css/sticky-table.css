@@ -1,0 +1,58 @@
+.sticky-table th,
+td
+{
+    /* 高さが変わらないよう改行させない */
+    white-space: nowrap;
+}
+.sticky-table thead th
+{
+    /* 縦スクロール時に固定する */
+    position: -webkit-sticky;
+    position:         sticky;
+    /* tbody内のセルより手前に表示する */
+    z-index: 1;
+    top: 0;
+    /* 下揃え */
+
+    vertical-align: bottom;
+    /* 背景色の設定 */
+
+    background-color: rgba(255, 255, 255, .9);
+}
+
+.sticky-table thead tr:nth-child(1) th
+{
+    top: 0;
+}
+
+.sticky-table thead tr:nth-child(2) th
+{
+    top: 2.4rem;
+    /* 2行目は1行目の高さの位置に固定する */
+}
+
+.sticky-table th:first-child,
+td:first-child
+{
+    /* 横スクロール時に固定する */
+    position: -webkit-sticky;
+    position:         sticky;
+    left: 0;
+}
+
+/* 背景色の設定 */
+.sticky-table tbody tr:nth-child(2n) td:first-child
+{
+    background-color: rgba(249, 249, 249, .9);
+}
+
+.sticky-table tbody tr:nth-child(2n+1) td:first-child
+{
+    background-color: rgba(255, 255, 255, .9);
+}
+
+.sticky-table thead tr:first-child th:first-child
+{
+    /* ヘッダー行内の他のセルより手前に表示する */
+    z-index: 2;
+}

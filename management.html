@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management - TBW Accounting System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="./css/sk-folding.css" />
+  </head>
+
+  <body>
+    <header class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">会計情報管理画面</h1>
+          <h2 class="subtitle">TBW Accounting System</h2>
+        </div>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <!-- 基本情報 -->
+        <section>
+          <article class="mb-6">
+            <h1 class="title is-4">基本情報</h1>
+            <table class="table is-striped has-text-left">
+              <tbody id="">
+              </tbody>
+            </table>
+          </article>
+        </section>
+
+        <!-- 会計情報 -->
+        <section class="mb-6">
+          <h1 class="title is-4">会計情報</h1>
+
+          <!-- 設定済みの会費情報 -->
+          <article class="mb-4">
+            <h2 class="subtitle is-5 mb-3">設定済みの会計情報</h2>
+            <table class="table is-striped has-text-left">
+              <thead>
+                <tr>
+                  <th>accounting_id</th>
+                  <th>year</th>
+                  <th>subject</th>
+                  <th>division</th>
+                  <th>receipt_db_name</th>
+                  <th>goods_db_name</th>
+                </tr>
+              </thead>
+              <tbody id="accounting_info_tbody">
+              </tbody>
+            </table>
+          </article>
+
+          <!-- 新規会費 -->
+          <article class="mb-6">
+            <button type="button" class="button is-dark is-small" id="add_accounting_info">＋ 新規会計</button>
+            <button type="button" class="button is-dark is-small" id="remove_accounting_info" style="display: none;">-
+              Close</button>
+            <form name="accounting_info_form" id="accounting_info_form" method="post" style="display: none;" class="mt-4">
+              <h2 class="subtitle is-5 mb-3">新規会計情報</h2>
+              <!-- Accounting ID -->
+              <div class="field">
+                <label for="accounting_id" class="label">Accounting ID</label>
+                <div class="control">
+                  <input type="text" name="accounting_id" id="accounting_id" accept-charset="UTF-8" class="input" required>
+                </div>
+              </div>
+          
+              <!-- 年度 -->
+              <div class="field">
+                <label class="label">Year</label>
+                <div class="control">
+                  <input class="input" type="number" name="year" accept-charset="UTF-8" required>
+                </div>
+              </div>
+          
+              <!-- 件名 -->
+              <div class="field">
+                <label for="subject" class="label">Subject</label>
+                <div class="select">
+                  <select name="subject" required>
+                    <option value="一般会計">一般会計</option>
+                    <option value="TF特別会計">TF特別会計</option>
+                    <option value="新歓特別会計">新歓特別会計</option>
+                    <option value="鳥人間コンテスト特別会計">鳥人間コンテスト特別会計</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+          
+                <!-- その他が選択されたときの件名入力欄 -->
+                <div class="control mt-3" id="accounting_other_subject" style="display: none;">
+                  <input type="text" name="other_subject" accept-charset="UTF-8" class="input">
+                </div>
+              </div>
+
+              <!-- 区分 -->
+              <div class="field">
+                <label for="division" class="label">Division</label>
+                <div class="select">
+                  <select name="division" required>
+                    <option value="一般会計">一般会計</option>
+                    <option value="特別会計" selected>特別会計</option>
+                  </select>
+                </div>
+              </div>
+              
+              <input type="hidden" name="mode" value="7">
+              <button type="button" class="button is-primary" name="submit_button">Add</button>
+            </form>
+          </article>
+        </section>
+
+        <!-- 会費情報 -->
+        <section>
+          <h1 class="title is-4">会費情報</h1>
+
+          <!-- 設定済み会費情報 -->
+          <article class="mb-4">
+            <h2 class="subtitle is-5 mb-3">設定済みの会費</h2>
+            <table class="table is-striped has-text-left">
+              <thead>
+                <tr>
+                  <th>fee_id</th>
+                  <th>year</th>
+                  <th>subject</th>
+                  <th>price</th>
+                </tr>
+              </thead>
+              <tbody id="fee_info_tbody">
+              </tbody>
+            </table>
+          </article>
+
+          <!-- 新規会費 -->
+          <article class="mb-6">
+            <button type="button" class="button is-dark is-small" id="add_fee_info">＋ 新規会費</button>
+            <button type="button" class="button is-dark is-small" id="remove_fee_info" style="display: none;">-
+              Close</button>
+            <form name="fee_info_form" id="fee_info_form" method="post" style="display: none;" class="mt-4">
+              <h2 class="subtitle is-5 mb-3">新規会費情報</h2>
+              <!-- Fee ID -->
+              <div class="field">
+                <label for="fee_id" class="label">Fee ID</label>
+                <div class="control">
+                  <input type="text" name="fee_id" id="fee_id" accept-charset="UTF-8" class="input" required>
+                </div>
+              </div>
+
+              <!-- 年度 -->
+              <div class="field">
+                <label class="label">Year</label>
+                <div class="control">
+                  <input class="input" type="number" name="year" accept-charset="UTF-8" required>
+                </div>
+              </div>
+
+              <!-- 件名 -->
+              <div class="field">
+                <label for="subject" class="label">Subject</label>
+                <div class="select">
+                  <select name="subject" required>
+                    <option value="前期会費">前期会費</option>
+                    <option value="後期会費">後期会費</option>
+                    <option value="TF代">TF代</option>
+                    <option value="琵琶湖代">琵琶湖代</option>
+                    <option value="新歓代">新歓代</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+
+                <!-- その他が選択されたときのID入力欄 -->
+                <div class="control mt-3" id="fee_other_subject" style="display: none;">
+                  <input type="text" name="other_subject" accept-charset="UTF-8" class="input">
+                </div>
+              </div>
+
+              <!-- 徴収額 -->
+              <div class="field">
+                <label class="label">Price</label>
+                <div class="field has-addons">
+                  <span class="control button is-static">¥</span>
+                  <p class="control">
+                    <input class="input" type="number" name="price" accept-charset="UTF-8" required>
+                  </p>
+                </div>
+              </div>
+
+              <!-- mode -->
+              <input type="hidden" name="mode" value="5">
+              <!-- 送信ボタン -->
+              <button type="button" class="button is-primary" name="submit_button">Add</button>
+            </form>
+          </article>
+
+          <!-- 支払済会費情報 -->
+          <article class="mb-6">
+            <h2 class="subtitle is-5 mb-3">支払い情報</h2>
+            <p><a href="./membership_fees.html">こちら</a>から確認できます。</p>
+          </article>
+        </section>
+        <iframe width="893" height="712" seamless frameborder="0" scrolling="no"
+          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQY3AJjtAekOqIT4FxwV4DUtTBgcYocA7Pfonmn60I939re6HEff18WRAogO8EX9IpyftEXfoauQGpx/pubchart?oid=1937216121&amp;format=interactive"></iframe>
+      </div>
+      
+    </main>
+
+    <!-- type="module" さえあれば、HTMLに埋め込まれたスクリプトでモジュールをインポートして使うこともできます。 -->
+    <script type="module" src="./js/management.js" charset="UTF-8"></script>
+
+  </body>
+
+</html>

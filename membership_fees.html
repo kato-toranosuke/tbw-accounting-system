@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Fee - TBW Accounting System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="./css/sticky-table.css" />
+    <link rel="stylesheet" href="./css/sk-folding.css" />
+  </head>
+
+  <body>
+
+    <div id="content-container">
+      <header class="hero is-primary">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">会費徴収表</h1>
+            <h2 class="subtitle">TBW Accounting System</h2>
+          </div>
+        </div>
+      </header>
+  
+      <main class="section">
+        <div class="container">
+          <a href="./management.html" class="button">&lt; 会計情報管理画面</a>
+          <form name="fee_form" method="get" id="fee_form">
+            <table class="table is-striped has-text-left sticky-table">
+              <thead id="table_header">
+              </thead>
+              <tbody id="table_body">
+              </tbody>
+            </table>
+            <input type="hidden" name="mode" value="3">
+            <button type="button" class="button is-primary" name="submit_button">Submit</button>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <!-- type="module" さえあれば、HTMLに埋め込まれたスクリプトでモジュールをインポートして使うこともできます。 -->
+    <script type="module" src="./js/membership_fees.js" charset="UTF-8"></script>
+  </body>
+
+</html>
