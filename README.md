@@ -1,5 +1,6 @@
 # tbw-accounting-system
-つくば鳥人間の会の会計システムです。
+つくば鳥人間の会の会計システムです。<br>
+Google SpreadsheetをDBとして扱う、システムです。
 
 ## 必要な技術
 - JavaScript
@@ -7,7 +8,7 @@
 - HTML
 - CSS
 
-## 使用しているライブラリ・フレームワーっく
+## 使用しているライブラリ・フレームワーク
 - Bulma
   - CSSフレームワーク
 - SpreadSheetSQL
@@ -18,3 +19,5 @@
   - 参考サイト
     - [Qiita](https://qiita.com/roana0229/items/fea931fcabc57f193620)
     - [Github](https://github.com/roana0229/spreadsheets-sql)
+
+## 運用方法
