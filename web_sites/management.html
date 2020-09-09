@@ -42,12 +42,13 @@
             <table class="table is-striped has-text-left">
               <thead>
                 <tr>
-                  <th>accounting_id</th>
+                  <th>id</th>
                   <th>year</th>
                   <th>subject</th>
                   <th>division</th>
                   <th>receipt_db_name</th>
                   <th>goods_db_name</th>
+                  <th>division_options_list</th>
                 </tr>
               </thead>
               <tbody id="accounting_info_tbody">
@@ -64,9 +65,9 @@
               <h2 class="subtitle is-5 mb-3">新規会計情報</h2>
               <!-- Accounting ID -->
               <div class="field">
-                <label for="accounting_id" class="label">Accounting ID</label>
+                <label for="accounting_id" class="label">ID</label>
                 <div class="control">
-                  <input type="text" name="accounting_id" id="accounting_id" accept-charset="UTF-8" class="input" required>
+                  <input type="text" name="accounting_id" id="accounting_id" accept-charset="UTF-8" class="input"  placeholder="ユニークなIDを設定してください。" required>
                 </div>
               </div>
           
@@ -124,10 +125,11 @@
             <table class="table is-striped has-text-left">
               <thead>
                 <tr>
-                  <th>fee_id</th>
+                  <th>id</th>
                   <th>year</th>
                   <th>subject</th>
                   <th>price</th>
+                  <th>target_accounting_id</th>
                 </tr>
               </thead>
               <tbody id="fee_info_tbody">
@@ -144,9 +146,9 @@
               <h2 class="subtitle is-5 mb-3">新規会費情報</h2>
               <!-- Fee ID -->
               <div class="field">
-                <label for="fee_id" class="label">Fee ID</label>
+                <label for="fee_id" class="label">ID</label>
                 <div class="control">
-                  <input type="text" name="fee_id" id="fee_id" accept-charset="UTF-8" class="input" required>
+                  <input type="text" name="fee_id" id="fee_id" accept-charset="UTF-8" class="input" placeholder="ユニークなIDを設定してください。" required>
                 </div>
               </div>
 
@@ -189,6 +191,14 @@
                 </div>
               </div>
 
+              <!-- 対象会計の設定 -->
+              <div class="field">
+                <label for="accounting_id" class="label">Target Accounting</label>
+                <div class="select">
+                  <select name="accounting_id" required></select>
+                </div>
+              </div>
+
               <!-- mode -->
               <input type="hidden" name="mode" value="5">
               <!-- 送信ボタン -->
@@ -202,8 +212,8 @@
             <p><a href="./membership_fees.html">こちら</a>から確認できます。</p>
           </article>
         </section>
-        <iframe width="893" height="712" seamless frameborder="0" scrolling="no"
-          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQY3AJjtAekOqIT4FxwV4DUtTBgcYocA7Pfonmn60I939re6HEff18WRAogO8EX9IpyftEXfoauQGpx/pubchart?oid=1937216121&amp;format=interactive"></iframe>
+        <!-- <iframe width="893" height="712" seamless frameborder="0" scrolling="no"
+          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQY3AJjtAekOqIT4FxwV4DUtTBgcYocA7Pfonmn60I939re6HEff18WRAogO8EX9IpyftEXfoauQGpx/pubchart?oid=1937216121&amp;format=interactive"></iframe> -->
       </div>
       
     </main>

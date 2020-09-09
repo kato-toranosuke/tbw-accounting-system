@@ -33,6 +33,9 @@
     <main class="section">
       <div class="container">
         <!-- 注意文 -->
+        <p class="mb-4 has-text-grey">対象会計：<a id="target_accounting_name"></a></p>
+
+        <!-- 注意文 -->
         <article class="message is-warning" id="warning_msg">
           <div class="message-header">
             <p>注意</p>
@@ -187,6 +190,8 @@
               <input type="hidden" name="g_num" value="">
               <input type="hidden" name="ym" value="">
               <input type="hidden" name="mode" value="0">
+              <input type="hidden" name="receipt_db_name" value="">
+              <input type="hidden" name="goods_db_name" value="">
             </div>
 
             <!-- 合計金額の表示 -->

@@ -1,5 +1,5 @@
 'use strict';
-const BASE_URL = "https://script.google.com/macros/s/AKfycbya0-RQIxiRL2GqWoBHqs3AzrmCAzv-9cKs21PSIMp0vVLv6k8m/exec";
+const BASE_URL = "https://script.google.com/macros/s/AKfycbzFPVa55eHOhBEGszrKbLOZi7Tr2NTme82t8ZXXqQ/exec";
 
 async function getData(mode = 1, base_url = BASE_URL) {
   screenLock();
@@ -116,6 +116,8 @@ function hideNode(node_id) {
 // スクリーンロック
 function screenLock() {
   if (document.querySelectorAll('.loading-container').length === 0) {
+    // スクロールロック
+    noScroll();
     // ロック用のdivを生成
     const container = document.createElement('div');
     container.classList.add('loading-container');
@@ -127,6 +129,7 @@ function screenLock() {
         <div class="sk-cube3 sk-cube"></div>
       </div>
     `;
+
     container.style.top = `${window.pageYOffset}px`;
     container.style.left = `${window.pageXOffset}px`;
 
@@ -137,6 +140,7 @@ function screenLock() {
 
 // スクリーンロックを解除する
 function cancelScreenLock() {
+  returnScroll();
   const container = document.getElementsByClassName('loading-container').item(0);
   container.remove();
 }
@@ -151,5 +155,25 @@ const isNumber = function (value) {
   return ((typeof value === 'number') && (isFinite(value)) && (value > 0));
 };
 
+// スクロール
+// スクロール禁止
+function noScroll() {
+  // PCでのスクロール禁止
+  document.addEventListener("mousewheel", scrollControl, { passive: false });
+  // スマホでのタッチ操作でのスクロール禁止
+  document.addEventListener("touchmove", scrollControl, { passive: false });
+}
+// スクロール禁止解除
+function returnScroll() {
+  // PCでのスクロール禁止解除
+  document.removeEventListener("mousewheel", scrollControl, { passive: false });
+  // スマホでのタッチ操作でのスクロール禁止解除
+  document.removeEventListener('touchmove', scrollControl, { passive: false });
+}
+// スクロール関連メソッド
+function scrollControl(event) {
+  event.preventDefault();
+}
+
 // export
-export { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, separateNum, switchNodeDisplay, hideNode, screenLock, switchModalDisplay, isNumber };
+export { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, separateNum, switchNodeDisplay, hideNode, screenLock, switchModalDisplay, isNumber, noScroll, cancelScreenLock };

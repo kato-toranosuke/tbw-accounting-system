@@ -1,11 +1,9 @@
-let RECEIPT_DB_NAME = "", GOODS_DB_NAME = "", MEMBER_DB_NAME = "", PAYMENT_DB_NAME = "", FEE_DB_NAME = "", HEADER_ROW_NUM = 0, ROOT_FOLDER_ID = "", RECEIPT_TEMPLATE_NAME = "", ADMIN_FAMILY_NAME = "", ADMIN_FIRST_NAME = "", ORGANIZATION_NAME = "", YEAR = 0, ADMIN_POSITION_NAME = "", DB_ID = "", ACCOUNTING_DB_NAME="";
+let MEMBER_DB_NAME = "", PAYMENT_DB_NAME = "", FEE_DB_NAME = "", HEADER_ROW_NUM = 0, ROOT_FOLDER_ID = "", RECEIPT_TEMPLATE_NAME = "", ADMIN_FAMILY_NAME = "", ADMIN_FIRST_NAME = "", ORGANIZATION_NAME = "", YEAR = 0, ADMIN_POSITION_NAME = "", DB_ID = "", ACCOUNTING_DB_NAME="";
 
 // Script Propertyの読み込み
 function readProperties() {
   const properties = PropertiesService.getScriptProperties();
   DB_ID = properties.getProperty('DB_ID');
-  RECEIPT_DB_NAME = properties.getProperty('RECEIPT_DB_NAME');
-  GOODS_DB_NAME = properties.getProperty('GOODS_DB_NAME');
   MEMBER_DB_NAME = properties.getProperty('MEMBER_DB_NAME');
   PAYMENT_DB_NAME = properties.getProperty('PAYMENT_DB_NAME');
   FEE_DB_NAME = properties.getProperty('FEE_DB_NAME');
@@ -65,7 +63,7 @@ function doGet(getdata) {
         registerNewFeePaymentData(getdata);
         break;
       case 4:
-        output_obj = getDbData(FEE_DB_NAME, HEADER_ROW_NUM, 4);
+        output_obj = getDbData(FEE_DB_NAME, HEADER_ROW_NUM, 5);
         break;
       case 5:
         registerNewMembershipFee(getdata);
@@ -388,7 +386,7 @@ function registerData4FeeAndPaymentDb(info, db_id = DB_ID) {
   try {
     // 会費情報の追加
     const subject = (info.subject != 'その他') ? info.subject : info.other_subject;
-    const data = [[info.fee_id, parseInt(info.year, 10), subject, parseInt(info.price, 10), "", info.fee_folder_id, info.receipt_ss_id, info.receipt_folder_id, info.counterfoil_ss_id, info.counterfoil_folder_id]];
+    const data = [[info.fee_id, parseInt(info.year, 10), subject, parseInt(info.price, 10), info.accounting_id, info.fee_folder_id, info.receipt_ss_id, info.receipt_folder_id, info.counterfoil_ss_id, info.counterfoil_folder_id]];
     simpleRegisterData(FEE_DB_NAME, data);
 
     // SpreadSheetsSQL.open(db_id, FEE_DB_NAME).insertRows([{fee_id: info.fee_id, year: info.year, subject}]);
@@ -480,7 +478,7 @@ function getDbData(db_name, header_row_num = HEADER_ROW_NUM, last_col_num = 0, d
   }
 }
 
-function returnResultHtml(postdata, db_id = DB_ID, receipt_db_name = RECEIPT_DB_NAME, goods_db_name = GOODS_DB_NAME) {
+function returnResultHtml(postdata, db_id = DB_ID) {
   let receipt_info = {
     date: "1970/1/1",
     no: "",
@@ -491,19 +489,22 @@ function returnResultHtml(postdata, db_id = DB_ID, receipt_db_name = RECEIPT_DB_
   };
   let output = "";
   try {
-    const db = SpreadsheetApp.openById(db_id);
-    const goods_db = db.getSheetByName(goods_db_name);
-    const receipt_db = SpreadSheetsSQL.open(db_id, receipt_db_name);
-
     // パラメータを取得
     const ym = postdata.parameters.ym.toString();
     const g_num = postdata.parameters.g_num.toString();
+    const receipt_db_name = postdata.parameters.receipt_db_name.toString();
+    const goods_db_name = postdata.parameters.goods_db_name.toString();
 
     // レシート情報の取得
     receipt_info.date = postdata.parameters.date.toString();
     receipt_info.writing = postdata.parameters.writing.toString();
     receipt_info.person = postdata.parameters.person.toString();
     receipt_info.class = postdata.parameters.class.toString();
+    
+    // DBの取得
+    const db = SpreadsheetApp.openById(db_id);
+    const goods_db = db.getSheetByName(goods_db_name);
+    const receipt_db = SpreadSheetsSQL.open(db_id, receipt_db_name);
 
     // レシート番号を算出
     let counter_result = receipt_db.select(['ym']).filter(`ym = ${ym}`).result().length;

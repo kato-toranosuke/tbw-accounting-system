@@ -1,15 +1,21 @@
 'use strict';
 
-import { BASE_URL, separateNum, hideNode, switchModalDisplay, confirmSending, screenLock} from './generalFuncs.js';
+import { BASE_URL, separateNum, hideNode, switchModalDisplay, confirmSending, screenLock, getData, noScroll, cancelScreenLock} from './generalFuncs.js';
 
 let g_no = 0;
 const goods_form = document.getElementById("goods_form");
 const date = document.getElementsByName("date")[0];
 const g_num = document.getElementsByName("g_num")[0];
 const ym = document.getElementsByName("ym")[0];
+let div_options_str = ""; // 区分のオプションを設定するhtml文字列
 
 // 日付の登録
-window.onload = function () {
+window.onload = async function () {
+  // 会計選択画面
+  const accounting_info = await getData(6);
+  selectAccounting(accounting_info.data);
+
+  console.log(accounting_info);
   // フォームのactionを設定する
   document.receipt_form.action = BASE_URL;
   let today = new Date();
@@ -62,20 +68,7 @@ document.getElementById("add_button").onclick = function () {
             <label class="label">区　分</label>
             <div class="select">
                 <select name="g${g_no}_div" required>
-                    <option value="翼">翼</option>
-                    <option value="桁">桁</option>
-                    <option value="フレーム">フレーム</option>
-                    <option value="電装">電装</option>
-                    <option value="フェアリング">フェアリング</option>
-                    <option value="プロペラ">プロペラ</option>
-                    <option value="CFRP">CFRP</option>
-                    <option value="CNC">CNC</option>
-                    <option value="パイロット">パイロット</option>
-                    <option value="全体">全体</option>
-                    <option value="鳥通">鳥通</option>
-                    <option value="玄武">玄武</option>
-                    <option value="文サ">文サ</option>
-                    <option value="その他">その他</option>
+                    ${div_options_str}
                 </select>
             </div>
         </div>
@@ -147,8 +140,6 @@ document.getElementById('advice-delete-button').onclick = () => {
   switchModalDisplay('total-fee-modal');
 };
 
-
-
 // 入力フォームにNGワードが含まれているかチェック
 function checkWord(node_name) {
   const input_node = document.getElementsByName(node_name)[0];
@@ -202,4 +193,61 @@ function setGroup(selected_index, g_num) {
   goods.selectedIndex = selected_index;
 }
 
-console.log(document.getElementsByClassName('abe').length);
+// 会費選択画面
+function selectAccounting(data) {
+  if (document.querySelectorAll('.loading-container').length === 0) {
+    noScroll();
+    // ロック用のdivを生成
+    const container = document.createElement('div');
+    container.classList.add('loading-container');
+    container.style.top = `${window.pageYOffset}px`;
+    container.style.left = `${window.pageXOffset}px`;
+
+    const p = document.createElement('p');
+    p.innerText = '登録する会計を選択してください。';
+    p.setAttribute('class', 'is-size-3');
+    p.setAttribute('style', 'margin: 20vh auto 30px auto; text-align: center;');
+    container.append(p);
+
+    data.forEach(datum => {
+      const button = document.createElement('button');
+      button.innerText = `${datum[1]}年度${datum[2]}`;
+      button.setAttribute('type', 'button');
+      button.setAttribute('class', 'button is-primary is-size-5');
+      button.setAttribute('style', 'display: block; margin: 10px auto;');
+      button.addEventListener('click', function () { rewriteForm(datum) });
+
+      container.appendChild(button);
+    });
+
+    const body_dom = document.getElementsByTagName("body").item(0);
+    body_dom.appendChild(container);
+
+    document.getElementById('target_accounting_name').addEventListener('click', function () { selectAccounting(data);});
+  }
+}
+
+// 会費に合わせたform内容の書き換え
+function rewriteForm(data) {
+  // DBの名前の設定
+  document.forms.receipt_form.receipt_db_name.value = data[4];
+  document.forms.receipt_form.goods_db_name.value = data[5];
+
+  // 区分リストの設定
+  const divisions = data[6].split(',');
+  div_options_str = "";
+  for (const division of divisions) {
+    div_options_str += `<option value="${division}">${division}</option>`;
+  }
+
+  // 区分リストの更新
+  document.forms.receipt_form.division.innerHTML = div_options_str;
+  // 描画済みのItemの区分リストの更新
+  for (let i = 0; i <= g_no; i++) {
+    document.forms.receipt_form[`g${i}_div`].innerHTML = div_options_str;
+  }
+
+  document.getElementById('target_accounting_name').innerText = `${data[1]}年度${data[2]}`;
+
+  cancelScreenLock();
+}
