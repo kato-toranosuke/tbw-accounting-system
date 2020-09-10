@@ -203,23 +203,31 @@ function selectAccounting(data) {
     container.style.top = `${window.pageYOffset}px`;
     container.style.left = `${window.pageXOffset}px`;
 
-    const p = document.createElement('p');
-    p.innerText = '登録する会計を選択してください。';
-    p.setAttribute('class', 'is-size-3-tablet is-size-4-mobile');
-    p.setAttribute('style', 'margin: 20vh auto 30px auto; text-align: center;');
-    container.append(p);
+    // content表示部分
+    const content_area = document.createElement('div');
+    content_area.classList.add('loading-container-content-area');
+    if (data.length > 0) {
+      const p = document.createElement('p');
+      p.innerText = '登録する会計を選択してください。';
+      p.classList.add('is-size-3-tablet', 'is-size-4-mobile', 'text');
+      content_area.append(p);
+      
+      data.forEach(datum => {
+        const div = document.createElement('div');
+        div.innerText = `${datum[1]}年度${datum[2]}`;
+        div.classList.add('is-size-5-tablet', 'is-size-6-moile', 'item');
+        div.addEventListener('click', function () { rewriteForm(datum) });
+  
+        content_area.appendChild(div);
+      });
+    } else {
+      const p = document.createElement('p');
+      p.innerText = '現在、申請できません。';
+      p.classList.add('is-size-3-tablet', 'is-size-4-mobile', 'text');
+      content_area.append(p);
+    }
 
-    data.forEach(datum => {
-      const button = document.createElement('button');
-      button.innerText = `${datum[1]}年度${datum[2]}`;
-      button.setAttribute('type', 'button');
-      button.setAttribute('class', 'button is-primary is-size-5-tablet is-size-6-moile');
-      button.setAttribute('style', 'display: block; margin: 10px auto;');
-      button.addEventListener('click', function () { rewriteForm(datum) });
-
-      container.appendChild(button);
-    });
-
+    container.appendChild(content_area);
     const body_dom = document.getElementsByTagName("body").item(0);
     body_dom.appendChild(container);
 
