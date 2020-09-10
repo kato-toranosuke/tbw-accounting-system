@@ -1,3 +1,5 @@
+'use strict';
+
 function returnResultHtml(postdata, db_id = DB_ID) {
   let receipt_info = {
     date: "1970/1/1",

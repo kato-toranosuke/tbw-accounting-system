@@ -1,8 +1,10 @@
-function exportSsToPdf(ss_id, sheet_name, folder_id) {
+'use strict';
+
+async function exportSsToPdf(ss_id, sheet_name, folder_id) {
   try {
     let output_obj = { success: -1, error: "this is initial error message.", pdf_blob: "" };
 
-    const sheet_id = SpreadsheetApp.openById(ss_id).getSheetByName(sheet_name).getSheetId();
+    const sheet_id = await SpreadsheetApp.openById(ss_id).getSheetByName(sheet_name).getSheetId();
     const sheet_id_str = sheet_id.toString(10);
 
     // urlを生成する
@@ -32,13 +34,13 @@ function exportSsToPdf(ss_id, sheet_name, folder_id) {
     let options = url_ext.join('&');
 
     // APIを使用するためのOAuth認証
-    const token = ScriptApp.getOAuthToken();
+    const token = await ScriptApp.getOAuthToken();
 
     // 変更内容を即反映させるメソッド
-    SpreadsheetApp.flush();
+    await SpreadsheetApp.flush();
 
     // PDFを作成
-    const response = UrlFetchApp.fetch(url + options, {
+    const response = await UrlFetchApp.fetch(url + options, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -62,13 +64,13 @@ function exportSsToPdf(ss_id, sheet_name, folder_id) {
   }
 }
 
-function createReceipt(receipts_ss_id, title, r_id, date, m_id, family_name, first_name, price, description, template_ss_id = DB_ID, template_sheet_name = RECEIPT_TEMPLATE_NAME, position = `${ORGANIZATION_NAME}　${YEAR}年度${ADMIN_POSITION_NAME}`, admin_family_name = ADMIN_FAMILY_NAME, admin_first_name = ADMIN_FIRST_NAME) {
+async function createReceipt(receipts_ss_id, title, r_id, date, m_id, family_name, first_name, price, description, template_ss_id = DB_ID, template_sheet_name = RECEIPT_TEMPLATE_NAME, position = `${ORGANIZATION_NAME}　${YEAR}年度${ADMIN_POSITION_NAME}`, admin_family_name = ADMIN_FAMILY_NAME, admin_first_name = ADMIN_FIRST_NAME) {
   try {
     let output_obj = { success: 0, ss_id: "", sheet_name: "" };
 
-    const template = SpreadsheetApp.openById(template_ss_id).getSheetByName(template_sheet_name);
-    const receipts_ss = SpreadsheetApp.openById(receipts_ss_id);
-    const receipt = template.copyTo(receipts_ss);
+    const template = await SpreadsheetApp.openById(template_ss_id).getSheetByName(template_sheet_name);
+    const receipts_ss = await SpreadsheetApp.openById(receipts_ss_id);
+    const receipt = await template.copyTo(receipts_ss);
 
     // 名前を設定する
     receipt.setName(`${r_id}_${m_id}_${family_name}${first_name}`);
@@ -99,7 +101,7 @@ function createReceipt(receipts_ss_id, title, r_id, date, m_id, family_name, fir
   }
 }
 
-function sendEmail(to, description, file, date_str, family_name, first_name, admin_family_name = ADMIN_FAMILY_NAME, admin_first_name = ADMIN_FIRST_NAME, admin_position_name = ADMIN_POSITION_NAME, organization_name = ORGANIZATION_NAME, year = YEAR) {
+async function sendEmail(to, description, file, date_str, family_name, first_name, admin_family_name = ADMIN_FAMILY_NAME, admin_first_name = ADMIN_FIRST_NAME, admin_position_name = ADMIN_POSITION_NAME, organization_name = ORGANIZATION_NAME, year = YEAR) {
   try {
     const subject = `【${description}】領収証の送付について`;
     const name = `${organization_name} ${admin_position_name}`;

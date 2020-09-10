@@ -1,26 +1,35 @@
 'use strict';
 import { BASE_URL, getData, sendDataWithGET, confirmSending, separateNum, switchNodeDisplay } from './generalFuncs.js';
 
+let accounting_data = [];
+
 window.onload = async function () {
   // formのactionを設定
   document.forms.accounting_info_form.action = BASE_URL;
   document.forms.fee_info_form.action = BASE_URL;
-  const accoounting_db_data =  await displayLatestDataInTable('accounting_info_tbody', 6, [], [8]);
-  const fee_db_data = await displayLatestDataInTable('fee_info_tbody', 4, [4], [6,7,8,9,10]);
+  const accoounting_db_data = await displayLatestDataInTable('accounting_info_tbody', 6, [], [8]);
+  const fee_db_data = await displayLatestDataInTable('fee_info_tbody', 4, [4], [6, 7, 8, 9, 10]);
 
-  // 新規会費情報登録フォームの対象会計を選ぶセレクタを設定
-  let options_html_str = "";
-  accoounting_db_data.data.forEach(data => {
-    options_html_str += `<option value="${data[0]}">${data[1]}年度${data[2]}</option>`
-  });
-  document.forms.fee_info_form.accounting_id.innerHTML = options_html_str;
+  setOptions('target_accounting_id', accounting_data);
 };
 
-async function displayLatestDataInTable(tbody_id, mode, digits_showing_col_nums = [], hidden_col_nums=[],url = BASE_URL) {
+// 新規会費情報登録フォームの対象会計を選ぶセレクタを設定
+function setOptions(select_node_id, data) {
+  let options_html_str = "";
+  data.forEach(datum => {
+    options_html_str += `<option value="${datum[0]}">${datum[1]}年度${datum[2]}</option>`
+  });
+  document.getElementById(select_node_id).innerHTML = options_html_str;
+}
+
+async function displayLatestDataInTable(tbody_id, mode, digits_showing_col_nums = [], hidden_col_nums = [], url = BASE_URL) {
   const db_data = await getData(mode, url);
   console.log(db_data);
   if (db_data.success == 1) {
     displayDataInTable(tbody_id, db_data.data, digits_showing_col_nums, hidden_col_nums);
+
+    if (tbody_id === 'accounting_info_tbody')
+      accounting_data = db_data.data;
   }
   return db_data;
 }
@@ -38,8 +47,8 @@ function displayDataInTable(tbody_id, data, digits_showing_col_nums = [], hidden
     for (let i = 0; i < datum.length; i++) {
       // 非表示列設定
       if (hidden_col_nums.includes(i + 1)) break;
-      
-      if (digits_showing_col_nums.includes(i+1))
+
+      if (digits_showing_col_nums.includes(i + 1))
         // 桁表示
         html_str += `<td>¥${separateNum(datum[i])}</td>`;
       else
@@ -111,6 +120,8 @@ fee_info_form.submit_button.onclick = function () {
 async function updateScreen(form_name, target_node_id, mode, digits_showing_col_nums, hidden_col_nums) {
   const res = await sendDataWithGET(form_name, BASE_URL);
   if (res.success == 1) {
-    displayLatestDataInTable(target_node_id, mode, digits_showing_col_nums, hidden_col_nums);
+    await displayLatestDataInTable(target_node_id, mode, digits_showing_col_nums, hidden_col_nums);
+    if (form_name === 'accounting_info_form')
+      setOptions('target_accounting_id', accounting_data);
   }
 }

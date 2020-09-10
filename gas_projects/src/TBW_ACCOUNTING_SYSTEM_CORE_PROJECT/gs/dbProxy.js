@@ -1,22 +1,4 @@
-let MEMBER_DB_NAME = "", PAYMENT_DB_NAME = "", FEE_DB_NAME = "", HEADER_ROW_NUM = 0, ROOT_FOLDER_ID = "", RECEIPT_TEMPLATE_NAME = "", ADMIN_FAMILY_NAME = "", ADMIN_FIRST_NAME = "", ORGANIZATION_NAME = "", YEAR = 0, ADMIN_POSITION_NAME = "", DB_ID = "", ACCOUNTING_DB_NAME="";
-
-// Script Propertyの読み込み
-function readProperties() {
-  const properties = PropertiesService.getScriptProperties();
-  DB_ID = properties.getProperty('DB_ID');
-  MEMBER_DB_NAME = properties.getProperty('MEMBER_DB_NAME');
-  PAYMENT_DB_NAME = properties.getProperty('PAYMENT_DB_NAME');
-  FEE_DB_NAME = properties.getProperty('FEE_DB_NAME');
-  HEADER_ROW_NUM = parseInt(properties.getProperty('HEADER_ROW_NUM'), 10);
-  ROOT_FOLDER_ID = properties.getProperty('ROOT_FOLDER_ID');
-  RECEIPT_TEMPLATE_NAME = properties.getProperty('RECEIPT_TEMPLATE_NAME');
-  ADMIN_POSITION_NAME = properties.getProperty('ADMIN_POSITION_NAME');
-  ADMIN_FAMILY_NAME = properties.getProperty('ADMIN_FAMILY_NAME');
-  ADMIN_FIRST_NAME = properties.getProperty('ADMIN_FIRST_NAME');
-  ORGANIZATION_NAME = properties.getProperty('ORGANIZATION_NAME');
-  YEAR = properties.getProperty('YEAR');
-  ACCOUNTING_DB_NAME = properties.getProperty('ACCOUNTING_DB_NAME');
-}
+'use strict';
 
 function doPost(postdata) {
   let output;

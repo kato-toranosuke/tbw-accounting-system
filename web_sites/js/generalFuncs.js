@@ -23,7 +23,7 @@ async function getData(mode = 1, base_url = BASE_URL) {
   return res;
 }
 
-async function sendDataWithGET(form_name, base_url = BASE_URL, screenlock_dom_class = 'loading-container') {
+async function sendDataWithGET(form_name, base_url = BASE_URL) {
   screenLock();
 
   let url = `${base_url}?mode=${document[form_name].mode.value}`;
