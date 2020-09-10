@@ -78,8 +78,21 @@ function registerNewAccounting(getdata) {
   try {
     const info = getdata.parameters;
 
+    // フォルダの生成
+    let create_accounting_folder_result;
+    if (info.division == '一般会計')
+      create_accounting_folder_result = addFolder(ROOT_FOLDER_ID, info.division, [`${info.year}年度`]);
+    else
+      create_accounting_folder_result = addFolder(ROOT_FOLDER_ID, `${info.year}年度${(info.subject == 'その他') ? info.other_subject : info.subject}`, [`${info.year}年度`, info.division]);
+    
+    // SSへのSheetの追加
+    
+    // DBへの登録
+    const data = [[info.accounting_id, info.year, `${(info.subject == 'その他') ? info.other_subject : info.subject}`, info.division, "A", "B", info.division_options_list, create_accounting_folder_result.folder_id]];
+    simpleRegisterData(ACCOUNTING_DB_NAME, data);
   } catch (error) {
-
+    console.error(error);
+    throw (new Error(`${error.name}: ${error.message} @ registerNewAccounting`));
   }
 }
 

@@ -58,7 +58,7 @@
 
           <!-- 新規会費 -->
           <article class="mb-6">
-            <button type="button" class="button is-dark is-small" id="add_accounting_info">＋ 新規会計</button>
+            <button type="button" class="button is-dark is-small" id="add_accounting_info">＋ New</button>
             <button type="button" class="button is-dark is-small" id="remove_accounting_info" style="display: none;">-
               Close</button>
             <form name="accounting_info_form" id="accounting_info_form" method="post" style="display: none;" class="mt-4">
@@ -108,6 +108,15 @@
                   </select>
                 </div>
               </div>
+
+              <!-- 区分リスト -->
+              <div class="field">
+                <label for="division_options_list" class="label">Division Options List</label>
+                <div class="control">
+                  <input type="text" name="division_options_list" id="division_options_list" accept-charset="UTF-8" class="input"
+                    placeholder=",(カンマ)で区切って記述してください。" required>
+                </div>
+              </div>
               
               <input type="hidden" name="mode" value="7">
               <button type="button" class="button is-primary" name="submit_button">Add</button>
@@ -139,7 +148,7 @@
 
           <!-- 新規会費 -->
           <article class="mb-6">
-            <button type="button" class="button is-dark is-small" id="add_fee_info">＋ 新規会費</button>
+            <button type="button" class="button is-dark is-small" id="add_fee_info">＋ New</button>
             <button type="button" class="button is-dark is-small" id="remove_fee_info" style="display: none;">-
               Close</button>
             <form name="fee_info_form" id="fee_info_form" method="post" style="display: none;" class="mt-4">
