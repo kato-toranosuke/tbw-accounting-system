@@ -56,7 +56,7 @@ function returnResultHtml(postdata, db_id = DB_ID) {
     goods_db.getRange(start_row, start_col, receipt_info.goods.length, receipt_info.goods[0].length).setValues(receipt_info.goods);
 
     // 結果HTMLファイルの生成
-    let result_page = HtmlService.createTemplateFromFile('result');
+    let result_page = HtmlService.createTemplateFromFile('html/result');
     result_page.r_no = receipt_info.no;
     output = result_page.evaluate();
     output

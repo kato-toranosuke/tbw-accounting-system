@@ -205,7 +205,7 @@ function selectAccounting(data) {
 
     const p = document.createElement('p');
     p.innerText = '登録する会計を選択してください。';
-    p.setAttribute('class', 'is-size-3');
+    p.setAttribute('class', 'is-size-3-tablet is-size-4-mobile');
     p.setAttribute('style', 'margin: 20vh auto 30px auto; text-align: center;');
     container.append(p);
 
@@ -213,7 +213,7 @@ function selectAccounting(data) {
       const button = document.createElement('button');
       button.innerText = `${datum[1]}年度${datum[2]}`;
       button.setAttribute('type', 'button');
-      button.setAttribute('class', 'button is-primary is-size-5');
+      button.setAttribute('class', 'button is-primary is-size-5-tablet is-size-6-moile');
       button.setAttribute('style', 'display: block; margin: 10px auto;');
       button.addEventListener('click', function () { rewriteForm(datum) });
 

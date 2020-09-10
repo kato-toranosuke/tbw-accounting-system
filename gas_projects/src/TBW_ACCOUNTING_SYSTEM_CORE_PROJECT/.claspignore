@@ -1,4 +1,4 @@
 **/**
 !*.js
-!*.html
+!html/*.html
 !appsscript.json
