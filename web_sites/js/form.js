@@ -230,6 +230,7 @@ function selectAccounting(data) {
 // 会費に合わせたform内容の書き換え
 function rewriteForm(data) {
   // DBの名前の設定
+  document.forms.receipt_form.accounting_id.value = data[0];
   document.forms.receipt_form.receipt_db_name.value = data[4];
   document.forms.receipt_form.goods_db_name.value = data[5];
 

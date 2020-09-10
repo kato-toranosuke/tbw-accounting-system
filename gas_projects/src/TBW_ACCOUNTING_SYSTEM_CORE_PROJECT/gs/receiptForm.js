@@ -16,6 +16,7 @@ function returnResultHtml(postdata, db_id = DB_ID) {
     const g_num = postdata.parameters.g_num.toString();
     const receipt_db_name = postdata.parameters.receipt_db_name.toString();
     const goods_db_name = postdata.parameters.goods_db_name.toString();
+    const accounting_id = postdata.parameters.accounting_id.toString();
 
     // レシート情報の取得
     receipt_info.date = postdata.parameters.date.toString();
@@ -31,7 +32,7 @@ function returnResultHtml(postdata, db_id = DB_ID) {
     // レシート番号を算出
     let counter_result = receipt_db.select(['ym']).filter(`ym = ${ym}`).result().length;
     // レシート番号を生成
-    receipt_info.no = `${ym}-${counter_result + 1}`;
+    receipt_info.no = `${accounting_id}-${ym}-${counter_result + 1}`;
     // 行を追加
     receipt_db.insertRows([
       { ym: ym, r_date: receipt_info.date, r_no: receipt_info.no }
