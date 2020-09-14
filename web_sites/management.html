@@ -10,24 +10,56 @@
   </head>
 
   <body>
-    <header class="hero is-primary">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">会計情報管理画面</h1>
-          <h2 class="subtitle">TBW Accounting System</h2>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+          data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="./management.html">
+            Home
+          </a>
+
+          <a class="navbar-item" href="./membership_fees.html">
+            Payment
+          </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light">
+                Log in
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </header>
+    </nav>
 
     <main class="section">
       <div class="container">
-        <!-- 基本情報 -->
+        <!-- プロパティ情報 -->
         <section>
           <article class="mb-6">
-            <h1 class="title is-4">基本情報</h1>
+            <h1 class="title is-4">プロパティ情報</h1>
             <table class="table is-striped has-text-left">
-              <tbody id="">
+              <tbody id="properties_info_tbody">
               </tbody>
+              <input type="hidden" name="mode" value="9">
             </table>
           </article>
         </section>
@@ -38,7 +70,7 @@
 
           <!-- 設定済みの会費情報 -->
           <article class="mb-4">
-            <h2 class="subtitle is-5 mb-3">設定済みの会計情報</h2>
+            <!-- <h2 class="subtitle is-5 mb-3">設定済みの会計情報</h2> -->
             <table class="table is-striped has-text-left">
               <thead>
                 <tr>
@@ -61,16 +93,18 @@
             <button type="button" class="button is-dark is-small" id="add_accounting_info">＋ New</button>
             <button type="button" class="button is-dark is-small" id="remove_accounting_info" style="display: none;">-
               Close</button>
-            <form name="accounting_info_form" id="accounting_info_form" method="post" style="display: none;" class="mt-4">
+            <form name="accounting_info_form" id="accounting_info_form" method="post" style="display: none;"
+              class="mt-4">
               <h2 class="subtitle is-5 mb-3">新規会計情報</h2>
               <!-- Accounting ID -->
               <div class="field">
                 <label for="accounting_id" class="label">ID</label>
                 <div class="control">
-                  <input type="text" name="accounting_id" id="accounting_id" accept-charset="UTF-8" class="input"  placeholder="ユニークなIDを設定してください。" required>
+                  <input type="text" name="accounting_id" id="accounting_id" accept-charset="UTF-8" class="input"
+                    placeholder="ユニークなIDを設定してください。" required>
                 </div>
               </div>
-          
+
               <!-- 年度 -->
               <div class="field">
                 <label class="label">Year</label>
@@ -78,7 +112,7 @@
                   <input class="input" type="number" name="year" accept-charset="UTF-8" required>
                 </div>
               </div>
-          
+
               <!-- 件名 -->
               <div class="field">
                 <label for="subject" class="label">Subject</label>
@@ -91,7 +125,7 @@
                     <option value="その他">その他</option>
                   </select>
                 </div>
-          
+
                 <!-- その他が選択されたときの件名入力欄 -->
                 <div class="control mt-3" id="accounting_other_subject" style="display: none;">
                   <input type="text" name="other_subject" accept-charset="UTF-8" class="input">
@@ -113,11 +147,11 @@
               <div class="field">
                 <label for="division_options_list" class="label">Division Options List</label>
                 <div class="control">
-                  <input type="text" name="division_options_list" id="division_options_list" accept-charset="UTF-8" class="input"
-                    placeholder=",(カンマ)で区切って記述してください。" required>
+                  <input type="text" name="division_options_list" id="division_options_list" accept-charset="UTF-8"
+                    class="input" placeholder=",(カンマ)で区切って記述してください。" required>
                 </div>
               </div>
-              
+
               <input type="hidden" name="mode" value="7">
               <button type="button" class="button is-primary" name="submit_button">Add</button>
             </form>
@@ -130,7 +164,7 @@
 
           <!-- 設定済み会費情報 -->
           <article class="mb-4">
-            <h2 class="subtitle is-5 mb-3">設定済みの会費</h2>
+            <!-- <h2 class="subtitle is-5 mb-3">設定済みの会費</h2> -->
             <table class="table is-striped has-text-left">
               <thead>
                 <tr>
@@ -157,7 +191,8 @@
               <div class="field">
                 <label for="fee_id" class="label">ID</label>
                 <div class="control">
-                  <input type="text" name="fee_id" id="fee_id" accept-charset="UTF-8" class="input" placeholder="ユニークなIDを設定してください。" required>
+                  <input type="text" name="fee_id" id="fee_id" accept-charset="UTF-8" class="input"
+                    placeholder="ユニークなIDを設定してください。" required>
                 </div>
               </div>
 
@@ -214,17 +249,11 @@
               <button type="button" class="button is-primary" name="submit_button">Add</button>
             </form>
           </article>
-
-          <!-- 支払済会費情報 -->
-          <article class="mb-6">
-            <h2 class="subtitle is-5 mb-3">支払い情報</h2>
-            <p><a href="./membership_fees.html">こちら</a>から確認できます。</p>
-          </article>
         </section>
         <!-- <iframe width="893" height="712" seamless frameborder="0" scrolling="no"
           src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQY3AJjtAekOqIT4FxwV4DUtTBgcYocA7Pfonmn60I939re6HEff18WRAogO8EX9IpyftEXfoauQGpx/pubchart?oid=1937216121&amp;format=interactive"></iframe> -->
       </div>
-      
+
     </main>
 
     <!-- type="module" さえあれば、HTMLに埋め込まれたスクリプトでモジュールをインポートして使うこともできます。 -->

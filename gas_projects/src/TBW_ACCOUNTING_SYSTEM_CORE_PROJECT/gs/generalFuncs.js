@@ -19,6 +19,18 @@ function readProperties() {
   ACCOUNTING_DB_NAME = properties.getProperty('ACCOUNTING_DB_NAME');
   HEADER_COLOR = properties.getProperty('HEADER_COLOR');
 }
+function getProperties() {
+  try {
+    let output_obj = { success: 0, error: "this is initial error message.", data: [] };
+
+    const properties = PropertiesService.getScriptProperties();
+    output_obj.data = properties.getProperties();
+    return output_obj;
+  } catch (error) {
+    console.error(error);
+    throw (new Error(`${error.name}: ${error.message} @ getProperties`));
+  }
+}
 
 async function generateReceiptId(fee_id, m_ids, db_name = PAYMENT_DB_NAME, db_id = DB_ID) {
   try {

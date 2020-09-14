@@ -31,14 +31,14 @@ async function registerNewFeePaymentData(getdata) {
       const r_ids = get_rids_result.data;
 
       // feeに関わる周辺情報を取得する
-      const fee_info = await SpreadSheetsSQL.open(DB_ID, FEE_DB_NAME).select(['fee_id', 'year', 'subject', 'price', 'budget_id', 'fee_folder_id', 'receipt_ss_id', 'receipt_folder_id', 'counterfoil_ss_id', 'counterfoil_folder_id']).filter(`fee_id = ${key}`).result();
+      const fee_info = await SpreadSheetsSQL.open(DB_ID, FEE_DB_NAME).select(['fee_id', 'year', 'subject', 'price', 'budget_id', 'fee_folder_id', 'receipts_ss_id', 'receipts_folder_id', 'counterfoils_ss_id', 'counterfoils_folder_id']).filter(`fee_id = ${key}`).result();
       const fee_id = fee_info[0].fee_id;
       const year = fee_info[0].year;
       const subject = fee_info[0].subject;
       const price = fee_info[0].price;
-      const receipt_ss_id = fee_info[0].receipt_ss_id;
-      const counterfoil_ss_id = fee_info[0].counterfoil_ss_id;
-      const receipt_folder_id = fee_info[0].receipt_folder_id;
+      const receipts_ss_id = fee_info[0].receipts_ss_id;
+      const counterfoils_ss_id = fee_info[0].counterfoils_ss_id;
+      const receipts_folder_id = fee_info[0].receipts_folder_id;
       const description = `${year}年度${subject}`;
 
       // 各メンバーにデータを追加
@@ -59,12 +59,12 @@ async function registerNewFeePaymentData(getdata) {
 
         // SS版領収証を生成
         // 領収証の生成
-        const create_receipt_result = await createReceipt(receipt_ss_id, '領収証', r_id, today_str_jp, mid, family_name, first_name, price, description);
+        const create_receipt_result = await createReceipt(receipts_ss_id, '領収証', r_id, today_str_jp, mid, family_name, first_name, price, description);
         // 控えの生成
-        const create_counterfoil_result = await createReceipt(counterfoil_ss_id, '領収証【会計控】', r_id, today_str_jp, mid, family_name, first_name, price, description);
+        const create_counterfoil_result = await createReceipt(counterfoils_ss_id, '領収証【会計控】', r_id, today_str_jp, mid, family_name, first_name, price, description);
 
         // PDFを生成
-        export_pdf_result = await exportSsToPdf(create_receipt_result.ss_id, create_receipt_result.sheet_name, receipt_folder_id);
+        export_pdf_result = await exportSsToPdf(create_receipt_result.ss_id, create_receipt_result.sheet_name, receipts_folder_id);
 
         // メールを配信
         sendEmail(email, description, export_pdf_result.pdf_blob, today_str_jp, family_name, first_name);
@@ -86,6 +86,9 @@ async function registerNewAccounting(getdata) {
       create_accounting_folder_result = await addFolder(ROOT_FOLDER_ID, info.division, [`${info.year}年度`]);
     else
       create_accounting_folder_result = await addFolder(ROOT_FOLDER_ID, `${info.year}年度${(info.subject == 'その他') ? info.other_subject : info.subject}`, [`${info.year}年度`, info.division]);
+    
+    // 出納帳フォルダを追加
+    const create_accounting_book_folder_result = await addFolder(create_accounting_folder_result.folder_id, 'account_books', []);
 
     // SSへのSheetの追加
     const receipt_db_name = `${info.accounting_id}_receipt_db`;
@@ -124,14 +127,14 @@ async function registerNewMembershipFee(getdata) {
     console.log(sql_result);
     const folder_id = sql_result[0].folder_id;
 
-    const create_fee_folder_result = await addFolder(folder_id, 'receipt', []);
-    const create_receipt_folder_result = await addFolder(create_fee_folder_result.folder_id, 'receipt', []);
-    const create_counterfoil_folder_result = await addFolder(create_fee_folder_result.folder_id, 'counterfoil', []);
+    const create_fee_folder_result = await addFolder(folder_id, `${(info.subject == 'その他') ? info.other_subject : info.subject}`, ['receipts']);
+    const create_receipt_folder_result = await addFolder(create_fee_folder_result.folder_id, 'receipts', []);
+    const create_counterfoil_folder_result = await addFolder(create_fee_folder_result.folder_id, 'counterfoils', []);
     console.log('end add folders');
 
     // SSを追加
-    const create_receipt_ss_result = await createSS(create_receipt_folder_result.folder_id, `${info.fee_id}_receipt`);
-    const create_counterfoil_ss_result = await createSS(create_counterfoil_folder_result.folder_id, `${info.fee_id}_counterfoil`);
+    const create_receipt_ss_result = await createSS(create_receipt_folder_result.folder_id, `${info.fee_id}_receipts`);
+    const create_counterfoil_ss_result = await createSS(create_counterfoil_folder_result.folder_id, `${info.fee_id}_counterfoils`);
     console.log('end create ss');
 
     info.fee_folder_id = create_fee_folder_result.folder_id;

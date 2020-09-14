@@ -56,6 +56,9 @@ function doGet(getdata) {
       case 7:
         registerNewAccounting(getdata);
         break;
+      case 8:
+        output_obj = getProperties();
+        break;
       default:
         console.error("invalid mode number: %d", mode);
         throw (new Error(`invalid mode number @ doGet`));

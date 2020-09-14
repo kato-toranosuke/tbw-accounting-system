@@ -1,7 +1,8 @@
 'use strict';
-import { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, switchNodeDisplay, screenLock} from './generalFuncs.js';
+import { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, toggleNavBurger} from './generalFuncs.js';
 
 window.onload = async function () {
+  toggleNavBurger();
   // 前回のレスポンスデータを取得・表示
   const past_data = JSON.parse(sessionStorage.getItem('pastData'));
 

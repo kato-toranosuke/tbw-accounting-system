@@ -1,5 +1,5 @@
 'use strict';
-import { BASE_URL, getData, sendDataWithGET, confirmSending, separateNum, switchNodeDisplay } from './generalFuncs.js';
+import { BASE_URL, getData, sendDataWithGET, confirmSending, separateNum, switchNodeDisplay, toggleNavBurger } from './generalFuncs.js';
 
 let accounting_data = [];
 
@@ -7,10 +7,12 @@ window.onload = async function () {
   // formのactionを設定
   document.forms.accounting_info_form.action = BASE_URL;
   document.forms.fee_info_form.action = BASE_URL;
+  const properties_data = await displayLatestPropertiesInTable('properties_info_tbody', 8);
   const accoounting_db_data = await displayLatestDataInTable('accounting_info_tbody', 6, [], [8]);
   const fee_db_data = await displayLatestDataInTable('fee_info_tbody', 4, [4], [6, 7, 8, 9, 10]);
 
   setOptions('target_accounting_id', accounting_data);
+  toggleNavBurger();
 };
 
 // 新規会費情報登録フォームの対象会計を選ぶセレクタを設定
@@ -34,13 +36,105 @@ async function displayLatestDataInTable(tbody_id, mode, digits_showing_col_nums 
   return db_data;
 }
 
-function displayDataInTable(tbody_id, data, digits_showing_col_nums = [], hidden_col_nums = []) {
+// tableをリセットする
+function resetTbody(tbody_id) {
   const old_tbody = document.getElementById(tbody_id);
 
   // 現在設定されている子要素を全て削除する
   const tbody = old_tbody.cloneNode(false); // 子要素は複製しない。
   old_tbody.parentNode.replaceChild(tbody, old_tbody);
+}
 
+// プロパティ情報の表示
+async function displayLatestPropertiesInTable(tbody_id, mode) {
+  const db_data = await getData(mode);
+  console.log(db_data);
+
+  resetTbody(tbody_id);
+
+  const tbody = document.getElementById(tbody_id);
+  const obj = db_data.data;
+
+  // sortする
+  const keys = Object.keys(obj);
+  keys.sort();
+
+  for (const key of keys) {
+    if (obj.hasOwnProperty(key)) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <th>${key}</th>
+        <td id='td_${key}'><span>${obj[key]}</span></td>
+      `;
+      tbody.appendChild(row);
+
+      // クリックしたとき
+      document.querySelector(`#td_${key} > span`).addEventListener('click', { handleEvent: displayForm, value: obj[key], key: key });
+    }
+  }
+}
+
+function displayForm(event) {
+  // フォーム要素の作成
+  const form = document.createElement('form');
+  form.setAttribute('name', `${this.key}_fom`);
+
+  // input要素
+  const input = document.createElement('input');
+  input.classList.add('input', 'mb-');
+  input.setAttribute('type', 'text');
+  input.setAttribute('name', this.key);
+  input.setAttribute('value', this.value);
+  // input.setAttribute('style', 'display: inline;');
+  input.setAttribute('accept-charset', 'UTF-8');
+
+  // 送信ボタン
+  const submit_button = document.createElement('button');
+  submit_button.classList.add('button', 'is-primary', 'is-small');
+  submit_button.textContent = 'Change';
+  submit_button.setAttribute('type', 'button');
+  // submit_button.setAttribute('style', 'display: inline-block;');
+  submit_button.onclick = () => {
+    if (confirmSending()) {
+      updateScreen('accounting_info_form', 'accounting_info_tbody', 6, [], [8]);
+    }
+  };
+  // キャンセルボタン
+  const cancel_button = document.createElement('button');
+  cancel_button.classList.add('button', 'is-light', 'is-small');
+  cancel_button.textContent = 'Cancel';
+  cancel_button.setAttribute('type', 'button');
+  // cancel_button.setAttribute('style', 'display: inline-block;');
+  cancel_button.addEventListener('click', { handleEvent: displayValue, value: this.value, key: this.key });
+
+  // mode
+  const mode = document.createElement('input');
+  mode.name = 'mode';
+  mode.type = 'hidden';
+  mode.value = 9;
+  
+  form.append(input, submit_button, cancel_button, mode);
+
+  // 中身の入れ替え
+  const span = event.currentTarget; // イベント発生元DOM
+  const td = span.parentNode;
+  td.replaceChild(form, span);
+}
+
+async function displayValue(event) {
+  const span = document.createElement('span');
+  span.textContent = this.value;
+  span.addEventListener('click', { handleEvent: displayForm, value: this.value, key: this.key });
+
+  const form = event.currentTarget.parentNode;
+  const td = form.parentNode;
+  td.replaceChild(span, form);
+}
+
+
+function displayDataInTable(tbody_id, data, digits_showing_col_nums = [], hidden_col_nums = []) {
+  resetTbody(tbody_id);
+  const tbody = document.getElementById(tbody_id);
   for (const datum of data) {
     const row = document.createElement('tr');
     let html_str = "";
