@@ -59,6 +59,9 @@ function doGet(getdata) {
       case 8:
         output_obj = getProperties();
         break;
+      case 9:
+        registerNewProperty(getdata);
+        break;
       default:
         console.error("invalid mode number: %d", mode);
         throw (new Error(`invalid mode number @ doGet`));

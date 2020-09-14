@@ -64,7 +64,7 @@ async function displayLatestPropertiesInTable(tbody_id, mode) {
       const row = document.createElement('tr');
       row.innerHTML = `
         <th>${key}</th>
-        <td id='td_${key}'><span>${obj[key]}</span></td>
+        <td id='td_${key}'><span style='cursor: pointer;'>${obj[key]}</span></td>
       `;
       tbody.appendChild(row);
 
@@ -74,44 +74,39 @@ async function displayLatestPropertiesInTable(tbody_id, mode) {
   }
 }
 
-function displayForm(event) {
+async function displayForm(event) {
+  const key = this.key;
   // フォーム要素の作成
   const form = document.createElement('form');
-  form.setAttribute('name', `${this.key}_fom`);
+  form.setAttribute('name', `property_${key}_form`);
 
   // input要素
   const input = document.createElement('input');
-  input.classList.add('input', 'mb-');
+  input.classList.add('input', 'mb-2');
   input.setAttribute('type', 'text');
-  input.setAttribute('name', this.key);
+  input.setAttribute('name', key);
   input.setAttribute('value', this.value);
-  // input.setAttribute('style', 'display: inline;');
   input.setAttribute('accept-charset', 'UTF-8');
 
   // 送信ボタン
   const submit_button = document.createElement('button');
-  submit_button.classList.add('button', 'is-primary', 'is-small');
+  submit_button.classList.add('button', 'is-primary', 'is-small', 'mr-2');
   submit_button.textContent = 'Change';
   submit_button.setAttribute('type', 'button');
-  // submit_button.setAttribute('style', 'display: inline-block;');
-  submit_button.onclick = () => {
-    if (confirmSending()) {
-      updateScreen('accounting_info_form', 'accounting_info_tbody', 6, [], [8]);
-    }
-  };
+  submit_button.addEventListener('click', { handleEvent: changeProperty, form_name: `property_${key}_form`, target_node_id: 'properties_info_tbody', mode: 8 });
+
   // キャンセルボタン
   const cancel_button = document.createElement('button');
   cancel_button.classList.add('button', 'is-light', 'is-small');
   cancel_button.textContent = 'Cancel';
   cancel_button.setAttribute('type', 'button');
-  // cancel_button.setAttribute('style', 'display: inline-block;');
-  cancel_button.addEventListener('click', { handleEvent: displayValue, value: this.value, key: this.key });
+  cancel_button.addEventListener('click', { handleEvent: displayValue, value: this.value, key: key });
 
   // mode
   const mode = document.createElement('input');
-  mode.name = 'mode';
-  mode.type = 'hidden';
-  mode.value = 9;
+  mode.setAttribute('type', 'hidden');
+  mode.setAttribute('name', 'mode');
+  mode.setAttribute('value', 9);
   
   form.append(input, submit_button, cancel_button, mode);
 
@@ -121,9 +116,16 @@ function displayForm(event) {
   td.replaceChild(form, span);
 }
 
+function changeProperty(event) {
+  if (confirmSending()) {
+    updateScreen(this.form_name, this.target_node_id, this.mode);
+  }
+}
+
 async function displayValue(event) {
   const span = document.createElement('span');
   span.textContent = this.value;
+  span.setAttribute('style', 'cursor: pointer;');
   span.addEventListener('click', { handleEvent: displayForm, value: this.value, key: this.key });
 
   const form = event.currentTarget.parentNode;
@@ -211,10 +213,14 @@ fee_info_form.submit_button.onclick = function () {
   }
 };
 
-async function updateScreen(form_name, target_node_id, mode, digits_showing_col_nums, hidden_col_nums) {
+async function updateScreen(form_name, target_node_id, mode, digits_showing_col_nums=[], hidden_col_nums=[]) {
   const res = await sendDataWithGET(form_name, BASE_URL);
   if (res.success == 1) {
-    await displayLatestDataInTable(target_node_id, mode, digits_showing_col_nums, hidden_col_nums);
+    if (form_name.includes('property')) {
+      await displayLatestPropertiesInTable(target_node_id, mode);
+    } else {
+      await displayLatestDataInTable(target_node_id, mode, digits_showing_col_nums, hidden_col_nums);
+    }
     if (form_name === 'accounting_info_form')
       setOptions('target_accounting_id', accounting_data);
   }

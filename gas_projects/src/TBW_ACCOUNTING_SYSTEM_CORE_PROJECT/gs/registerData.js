@@ -170,3 +170,19 @@ function registerData4FeeAndPaymentDb(info, db_id = DB_ID) {
     throw (new Error(`${error.name}: ${error.message} @ registerData4FeeAndPaymentDb`));
   }
 }
+
+async function registerNewProperty(getdata) {
+  try {
+    const info = getdata.parameters;
+    const properties = PropertiesService.getScriptProperties();
+    for (const key in info) {
+      if (info.hasOwnProperty(key)) {
+        if (key != 'mode')
+          properties.setProperty(key, info[key].toString());
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    throw (new Error(`${error.name}: ${error.message} @ registerNewProperty`));
+  }
+}

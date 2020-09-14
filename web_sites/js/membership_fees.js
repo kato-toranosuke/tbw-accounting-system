@@ -4,24 +4,25 @@ import { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirm
 window.onload = async function () {
   toggleNavBurger();
   // 前回のレスポンスデータを取得・表示
-  const past_data = JSON.parse(sessionStorage.getItem('pastData'));
+  // const past_data = JSON.parse(sessionStorage.getItem('pastData'));
 
   document.fee_form.action = BASE_URL;
   const member_data = await getData(1, BASE_URL);
   const payment_data = await getData(2, BASE_URL);
+  const fee_data = await getData(4, BASE_URL);
   if (member_data.success == 1 && payment_data.success == 1) {
     const header = payment_data.data.shift();
     // IDをkeyに昇順でsortする
     const sorted_member_data = sortArray(member_data.data, 0, 1);
     const data = matchKeyInArray(sorted_member_data, payment_data.data, 0, 0);
-    displayData(data, header);
+    displayData(data, header, fee_data.data);
   }
 };
 
 async function updateScreen(form_name) {
   const res = await sendDataWithGET(form_name, BASE_URL);
   // 画面遷移時にもレスポンスデータを確認できるようにweb strageにデータを保存する
-  sessionStorage.setItem('pastData', JSON.stringify(res));
+  // sessionStorage.setItem('pastData', JSON.stringify(res));
 
   if (res.success == 1) {
     // 画面をリロードする。trueにする事でWEBサーバの情報からリロード。falseはキャッシュからリロード。
@@ -34,7 +35,7 @@ document.getElementsByName('submit_button')[0].onclick = function () {
     updateScreen('fee_form');
 };
 
-function displayData(data_arry, header_arry) {
+function displayData(data_arry, header_arry, fee_data) {
   const theader = document.getElementById('table_header');
   const tbody = document.getElementById('table_body');
   const fees_num = (header_arry.length - 1) / 3;
@@ -59,14 +60,19 @@ function displayData(data_arry, header_arry) {
       // 会費名の表示部分
       const th_fee = document.createElement('th');
       th_fee.setAttribute('colspan', '3');
-      th_fee.textContent = `Fee ID: ${header_arry[3 * i + 1]}`;
+      // 会費IDから会費名を取得
+      for (const fee_datum of fee_data) {
+        if (fee_datum[0] == header_arry[3 * i + 1]) {
+          th_fee.textContent = `${fee_datum[1]}年度${fee_datum[2]}`;
+          break;
+        }
+      }
       upper_hrow.appendChild(th_fee);
   
       // Done/Date/Idの表示部分
       for (const item of fee_items) {
         const th_item = document.createElement('th');
         th_item.textContent = item;
-        // th_item.classList.add('has-text-weight-normal');
         th_item.classList.add('has-text-weight-light');
         lower_hrow.appendChild(th_item);
       }
