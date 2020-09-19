@@ -28,23 +28,15 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="./management.html">
-            Home
-          </a>
-
-          <a class="navbar-item" href="./membership_fees.html">
-            Payment
-          </a>
+          <a class="navbar-item" href="./management.html">Home</a>
+          <a class="navbar-item" href="./membership_fees.html">Payment</a>
         </div>
 
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary" href="#" onclick="signOut();"><strong>Sign out</strong></a>
-              <!-- <a class="button is-light" data-onsuccess="onSignIn"> -->
-              <a class="g-signin2" data-onsuccess="onSignIn">
-                Log in
-              </a>
+              <a id="my-signin2">Log in</a>
+              <a class="button is-light ml-3" href="#" id="signout_button">Sign out</a>
             </div>
           </div>
         </div>
@@ -52,7 +44,7 @@
     </nav>
 
     <main class="section">
-      <div class="container">
+      <div class="container" id="main_content">
         <!-- プロパティ情報 -->
         <section>
           <article class="mb-6">
@@ -254,13 +246,12 @@
         <!-- <iframe width="893" height="712" seamless frameborder="0" scrolling="no"
           src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQY3AJjtAekOqIT4FxwV4DUtTBgcYocA7Pfonmn60I939re6HEff18WRAogO8EX9IpyftEXfoauQGpx/pubchart?oid=1937216121&amp;format=interactive"></iframe> -->
       </div>
-
     </main>
 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="./js/signin.js" charset="UTF-8" async defer></script>
     <!-- type="module" さえあれば、HTMLに埋め込まれたスクリプトでモジュールをインポートして使うこともできます。 -->
-    <script type="module" src="./js/management.js" charset="UTF-8"></script>
-    <script src="./js/signin.js"></script>
+    <script type="module" src="./js/management.js" charset="UTF-8" async defer></script>
   </body>
 
 </html>

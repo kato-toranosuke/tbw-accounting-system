@@ -13,6 +13,8 @@ window.onload = async function () {
 
   setOptions('target_accounting_id', accounting_data);
   toggleNavBurger();
+
+  await checkSignin();
 };
 
 // 新規会費情報登録フォームの対象会計を選ぶセレクタを設定

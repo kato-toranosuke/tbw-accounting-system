@@ -4,6 +4,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id"
+      content="552026064503-jaq21hfgdfkqd1j3ijapiv8id50jinmp.apps.googleusercontent.com">
     <title>Membership Fee - TBW Accounting System</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
     <link rel="stylesheet" href="./css/sticky-table.css" />
@@ -29,24 +31,15 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
-            <a class="navbar-item" href="./management.html">
-              Home
-            </a>
-
-            <a class="navbar-item" href="./membership_fees.html">
-              Payment
-            </a>
+            <a class="navbar-item" href="./management.html">Home</a>
+            <a class="navbar-item" href="./membership_fees.html">Payment</a>
           </div>
 
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light">
-                  Log in
-                </a>
+                <a id="my-signin2">Log in</a>
+                <a class="button is-light ml-3" href="#" id="signout_button">Sign out</a>
               </div>
             </div>
           </div>
@@ -55,7 +48,7 @@
 
 
       <main class="section">
-        <div class="container">
+        <div class="container" id="main_content">
           <form name="fee_form" method="get" id="fee_form">
             <table class="table is-striped has-text-left sticky-table">
               <thead id="table_header">
@@ -70,8 +63,10 @@
       </main>
     </div>
 
+    <script src="./js/signin.js" charset="UTF-8" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <!-- type="module" さえあれば、HTMLに埋め込まれたスクリプトでモジュールをインポートして使うこともできます。 -->
-    <script type="module" src="./js/membership_fees.js" charset="UTF-8"></script>
+    <script type="module" src="./js/membership_fees.js" charset="UTF-8" async defer></script>
   </body>
 
 </html>

@@ -17,6 +17,8 @@ window.onload = async function () {
     const data = matchKeyInArray(sorted_member_data, payment_data.data, 0, 0);
     displayData(data, header, fee_data.data);
   }
+
+  checkSignin();
 };
 
 async function updateScreen(form_name) {

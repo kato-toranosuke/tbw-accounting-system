@@ -14,14 +14,29 @@ function doPost(postdata) {
       case 0:
         output = returnResultHtml(postdata);
         break;
+      case 1:
+        let output_obj = { success: 0, error_message: "this is initial error message." };
+        const token_id = PropertiesService.getScriptProperties().getProperty('ADMIN_ACCOUNT_ID');
+        output_obj.token_id = token_id;
+        output_obj.answer = postdata.parameters.profile_id.toString();
+        if (token_id == postdata.parameters.profile_id.toString()) {
+          output_obj.success = 1;
+        } else {
+          output_obj.success = 0;
+        }
+        output = ContentService.createTextOutput();
+        output.setMimeType(ContentService.MimeType.JSON);
+        output.setContent(JSON.stringify(output_obj));
+        break;
       default:
-        console.error("invalid mode number: %d", mode);
+        console.log("invalid mode number: %d", mode);
         throw (new Error(`invalid mode number @ doPost`));
     }
 
   } catch (error) {
     console.error(error);
     output = ContentService.createTextOutput(`エラーが発生しました。申し訳ありませんが、もう一度お試しください。\n${error.name}: ${error.message}`);
+    output.setMimeType(ContentService.MimeType.TEXT);
   } finally {
     lock.releaseLock();
     return output;

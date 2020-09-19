@@ -26,20 +26,21 @@ async function getData(mode = 1, base_url = BASE_URL) {
 async function sendDataWithGET(form_name, base_url = BASE_URL) {
   screenLock();
 
-  console.log(form_name);
   let url = `${base_url}?mode=${document[form_name].mode.value}`;
   for (let i = 0; i < document[form_name].elements.length; i++) {
     const ele_name = document[form_name].elements[i].name;
-    if (ele_name == 'submit_button' || ele_name == 'mode' || ele_name == 'checked')
+    if (ele_name == 'submit_button' || ele_name == 'mode' || ele_name == 'checked' || ele_name == 'button')
       continue;
     else {
       // 会費徴収表におけるチェック済み項目をパスする
-      if ((document[form_name].elements[i].type == 'checkbox') && (!document[form_name].elements[i].checked))
+      const type = document[form_name].elements[i].type;
+      if (((type == 'checkbox') && (!document[form_name].elements[i].checked)) || type == 'button')
         continue;
       url += `&${ele_name}=${document[form_name].elements[i].value}`;
     }
   }
 
+  console.log(url);
   const res = await fetch(url)
     .then(response => {
       if (response.ok) {
