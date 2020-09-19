@@ -1,5 +1,5 @@
 'use strict';
-import { BASE_URL, getData, sendDataWithGET, confirmSending, separateNum, switchNodeDisplay, toggleNavBurger } from './generalFuncs.js';
+import { BASE_URL, getData, sendDataWithGET, confirmSending, separateNum, switchNodeDisplay, toggleNavBurger} from './generalFuncs.js';
 
 let accounting_data = [];
 

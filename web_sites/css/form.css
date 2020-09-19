@@ -38,7 +38,7 @@
     color: white;
     border-radius: 1ex;
     background-color: #00cba9;
-    box-shadow: 1ch 1ex 2ex .5ch rgba(104, 103, 103, .5);
+    box-shadow: .3ch .3ex 1ex .1ch rgba(104, 103, 103, .5);
 }
 
 .item:last-child
@@ -48,7 +48,8 @@
 
 .item:hover
 {
-    transform: translateX(.5ch) translateY(.5ex) scale(.97);
+    /* transform: translateX(.2ch) translateY(.2ex) scale(.97); */
+    transform: scaleX(.97) scaleY(.97);
 
-    background-color: #02b899;
+    background-color: #01bb9c;
 }

@@ -24,33 +24,6 @@ async function createSS(folder_id, ss_name) {
   }
 }
 
-// function createFolderAndSS(root_folder_id, folder_name, ss_name, parent_folders_names = []) {
-//   try {
-//     let output_obj = { success: 0, folder_id: "", ss_id: "" };
-
-//     // SSを配置するフォルダを作成する
-//     const folder_result = addFolder(root_folder_id, folder_name, parent_folders_names);
-//     // Spread Sheetを新規作成する
-//     const ss_id = SpreadsheetApp.create(ss_name).getId();
-//     // Spread SheetをFileオブジェクトとして取得する。
-//     const file = DriveApp.getFileById(ss_id);
-//     // 作成したフォルダ下にssを追加
-//     DriveApp.getFolderById(folder_result.folder_id).addFile(file);
-//     // ssをマイドライブから削除
-//     DriveApp.getRootFolder().removeFile(file);
-
-//     // 返り値を設定
-//     output_obj.success = 1;
-//     output_obj.folder_id = folder_result.folder_id;
-//     output_obj.ss_id = ss_id;
-
-//     return output_obj;
-//   } catch (error) {
-//     console.error(error);
-//     throw (new Error(`${error.name}: ${error.message} @ createFolderAndSS`));
-//   }
-// }
-
 async function addFolder(root_folder_id, new_folder_name, parent_folders_names = []) {
   try {
     let output_obj = { success: 0, folder_id: "" };

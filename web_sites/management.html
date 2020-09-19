@@ -4,6 +4,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id"
+      content="552026064503-jaq21hfgdfkqd1j3ijapiv8id50jinmp.apps.googleusercontent.com">
     <title>Management - TBW Accounting System</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
     <link rel="stylesheet" href="./css/sk-folding.css" />
@@ -38,10 +40,9 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
+              <a class="button is-primary" href="#" onclick="signOut();"><strong>Sign out</strong></a>
+              <!-- <a class="button is-light" data-onsuccess="onSignIn"> -->
+              <a class="g-signin2" data-onsuccess="onSignIn">
                 Log in
               </a>
             </div>
@@ -256,9 +257,10 @@
 
     </main>
 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- type="module" さえあれば、HTMLに埋め込まれたスクリプトでモジュールをインポートして使うこともできます。 -->
     <script type="module" src="./js/management.js" charset="UTF-8"></script>
-
+    <script src="./js/signin.js"></script>
   </body>
 
 </html>
