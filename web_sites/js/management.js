@@ -1,5 +1,5 @@
 'use strict';
-import { BASE_URL, getData, sendDataWithGET, confirmSending, separateNum, switchNodeDisplay, toggleNavBurger} from './generalFuncs.js';
+import { BASE_URL, getData, sendDataWithGET, confirmSending, displayAsJPY, switchNodeDisplay, toggleNavBurger} from './generalFuncs.js';
 
 let accounting_data = [];
 
@@ -148,7 +148,7 @@ function displayDataInTable(tbody_id, data, digits_showing_col_nums = [], hidden
 
       if (digits_showing_col_nums.includes(i + 1))
         // 桁表示
-        html_str += `<td>¥${separateNum(datum[i])}</td>`;
+        html_str += `<td>${displayAsJPY(datum[i])}</td>`;
       else
         html_str += `<td>${datum[i]}</td>`
     }

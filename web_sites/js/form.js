@@ -1,6 +1,6 @@
 'use strict';
 
-import { BASE_URL, separateNum, hideNode, switchModalDisplay, confirmSending, screenLock, getData, noScroll, cancelScreenLock} from './generalFuncs.js';
+import { BASE_URL, displayAsJPY, hideNode, switchModalDisplay, confirmSending, getData, noScroll, cancelScreenLock} from './generalFuncs.js';
 
 let g_no = 0;
 const goods_form = document.getElementById("goods_form");
@@ -119,7 +119,7 @@ function calcTotal() {
     let g_q = document.getElementsByName("g" + i + "_q")[0].value;
     total += g_price * g_q;
   }
-  total_area.textContent = separateNum(total);
+  total_area.textContent = displayAsJPY(total);
 }
 document.forms.receipt_form.g0_price.onchange = calcTotal;
 document.forms.receipt_form.g0_q.onchange = calcTotal;

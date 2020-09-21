@@ -95,9 +95,8 @@ function confirmSending(screenlock_dom_class = 'loading-container') {
   }
 }
 
-// 数値を3桁刻みにする。正規表現でセパレート
-function separateNum(num) {
-  return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+function displayAsJPY(num) {
+  return Number(num).toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' });
 }
 
 // Nodeの表示・非表示を切り替える
@@ -203,4 +202,4 @@ function toggleNavBurger() {
 }
 
 // export
-export { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, separateNum, switchNodeDisplay, hideNode, screenLock, switchModalDisplay, isNumber, noScroll, cancelScreenLock, toggleNavBurger};
+export { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, displayAsJPY, switchNodeDisplay, hideNode, screenLock, switchModalDisplay, isNumber, noScroll, cancelScreenLock, toggleNavBurger};
