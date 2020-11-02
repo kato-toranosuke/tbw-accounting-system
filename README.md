@@ -21,3 +21,15 @@ Google SpreadsheetをDBとして扱う、システムです。
     - [Github](https://github.com/roana0229/spreadsheets-sql)
 
 ## 運用方法
+## 導入方法
+1. Google Driveの中のDB用SpreadsheetとGoogle Apps ScriptのProjectを複製する。
+2. Projectのスクリプト・プロパティを設定する。
+  1. プロジェクトのプロパティ設定画面への行き方
+  ![プロジェクトのプロパティ設定画面への行き方](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/b.png)
+  1. プロジェクトのプロパティ設定画面
+  ![プロジェクトのプロパティ設定画面](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/a.png)
+### 設定するプロパティ
+![プロパティ情報](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/c.png)
+
+3. デプロイする。[参考動画](https://photos.app.goo.gl/PU3wbtoknxsvomHV9)
+4. ウェブサイトの```generalFunc.js```内の```base_url```をデプロイした際に発行されたURLに書き換える。
