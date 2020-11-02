@@ -23,11 +23,11 @@ Google SpreadsheetをDBとして扱う、システムです。
 ## 導入方法
 1. Google Driveの中のDB用SpreadsheetとGoogle Apps ScriptのProjectを複製する。
 1. Projectのスクリプト・プロパティを設定する。
-  1. プロジェクトのプロパティ設定画面への行き方
-![プロジェクトのプロパティ設定画面への行き方](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/b.png)
-  1. プロジェクトのプロパティ設定画面
-![プロジェクトのプロパティ設定画面](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/a.png)
-  1. 設定するプロパティ
-![プロパティ情報](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/c.png)
+    - プロジェクトのプロパティ設定画面への行き方
+    ![プロジェクトのプロパティ設定画面への行き方](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/b.png)
+    - プロジェクトのプロパティ設定画面
+    ![プロジェクトのプロパティ設定画面](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/a.png)
+    - 設定するプロパティ
+    ![プロパティ情報](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/c.png)
 1. デプロイする。[参考動画](https://photos.app.goo.gl/PU3wbtoknxsvomHV9)
 1. ウェブサイトの```generalFunc.js```内の```base_url```をデプロイした際に発行されたURLに書き換える。
