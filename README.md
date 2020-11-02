@@ -17,8 +17,8 @@ Google SpreadsheetをDBとして扱う、システムです。
     - GoogleAppsScript上でリソース > ライブラリ > ProjectIDを入力 > 選択 > 最新バージョンを選択
     - Project ID: `MAoZrMsylZMiNUMljU4QtRHEMpGMKinCk`
   - 参考サイト
-    - [Qiita](https://qiita.com/roana0229/items/fea931fcabc57f193620)
-    - [Github](https://github.com/roana0229/spreadsheets-sql)
+    - [Qiita:GoogleAppsScriptでSQLっぽくDBを扱えるライブラリを作りました。](https://qiita.com/roana0229/items/fea931fcabc57f193620)
+    - [Github:SpreadsheetSQL](https://github.com/roana0229/spreadsheets-sql)
     
 ## 導入方法
 1. Google Driveの中のDB用SpreadsheetとGoogle Apps ScriptのProjectを複製する。
