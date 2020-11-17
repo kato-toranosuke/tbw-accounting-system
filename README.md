@@ -30,7 +30,7 @@ Google SpreadsheetをDBとして扱う、システムです。
     - 設定するプロパティ
     ![プロパティ情報](https://www.u.tsukuba.ac.jp/~s1811411/tas-intro/c.png)
 1. デプロイする。[参考動画](https://photos.app.goo.gl/PU3wbtoknxsvomHV9)
-1. ウェブサイトの```generalFunc.js```内の```base_url```をデプロイした際に発行されたURLに書き換える。
+1. ウェブサイトの```web_sites/generalFunc.js```内の```BASE_URL```をデプロイした際に発行されたURLに書き換える。<br>ウェブサイトの```web_sites/signin.js```内の```BASE_URL```をデプロイした際に発行されたURLに書き換える。
 
 ### プロパティの中身
 - ACCOUNTING_DB_NAME: DBとなるSSの名前
