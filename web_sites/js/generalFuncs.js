@@ -1,11 +1,15 @@
 'use strict';
-const BASE_URL = "https://script.google.com/macros/s/AKfycbzFPVa55eHOhBEGszrKbLOZi7Tr2NTme82t8ZXXqQ/exec";
+const BASE_URL = "https://script.google.com/macros/s/AKfycbyW-9RNS4XyVR-Q3__DPA_yxA5xYwNTgnen9Nf2Jyyb-h4LvJun/exec";
+// const BASE_URL = "https://script.google.com/macros/s/AKfycbyW-9RNS4XyVR-Q3__DPA_yxA5xYwNTgnen9Nf2Jyyb-h4LvJun/exec";
 
 async function getData(mode = 1, base_url = BASE_URL) {
   screenLock();
 
   const url = `${base_url}?mode=${mode}`;
-  const res = await fetch(url)
+  const res = await fetch(url, {
+    method: 'GET',
+    mode: 'no-cors'
+  })
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -202,4 +206,4 @@ function toggleNavBurger() {
 }
 
 // export
-export { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, displayAsJPY, switchNodeDisplay, hideNode, screenLock, switchModalDisplay, isNumber, noScroll, cancelScreenLock, toggleNavBurger};
+export { BASE_URL, getData, sendDataWithGET, matchKeyInArray, sortArray, confirmSending, displayAsJPY, switchNodeDisplay, hideNode, screenLock, switchModalDisplay, isNumber, noScroll, cancelScreenLock, toggleNavBurger };

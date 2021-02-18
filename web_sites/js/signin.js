@@ -1,5 +1,6 @@
 'use strict';
-const BASE_URL = "https://script.google.com/macros/s/AKfycbzFPVa55eHOhBEGszrKbLOZi7Tr2NTme82t8ZXXqQ/exec";
+// const BASE_URL = "https://script.google.com/macros/s/AKfycbzFPVa55eHOhBEGszrKbLOZi7Tr2NTme82t8ZXXqQ/exec";
+const BASE_URL = "https://script.google.com/macros/s/AKfycbyW-9RNS4XyVR-Q3__DPA_yxA5xYwNTgnen9Nf2Jyyb-h4LvJun/exec";
 const signout_button = document.getElementById('signout_button');
 let is_admin_account = 0;
 
@@ -17,6 +18,7 @@ function renderButton() {
 
 async function onSuccess(googleUser) {
   const profile_id = googleUser.getBasicProfile().getId();
+  console.log(profile_id);
   await fetch(BASE_URL, {
     method: 'POST',
     mode: 'cors',
@@ -88,7 +90,7 @@ function askSignin(node_id = 'main_content') {
   }
 }
 
-function checkSignin() {
+async function checkSignin() {
   const auth2 = gapi.auth2.init();
   if (auth2.isSignedIn.get() && is_admin_account === 1)
     cancelSigninAttention('main_content');
