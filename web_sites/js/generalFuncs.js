@@ -1,15 +1,13 @@
 'use strict';
-const BASE_URL = "https://script.google.com/macros/s/AKfycbyW-9RNS4XyVR-Q3__DPA_yxA5xYwNTgnen9Nf2Jyyb-h4LvJun/exec";
-// const BASE_URL = "https://script.google.com/macros/s/AKfycbyW-9RNS4XyVR-Q3__DPA_yxA5xYwNTgnen9Nf2Jyyb-h4LvJun/exec";
+
+// BASE_URL: デプロイ後のウェブアプリのURL
+const BASE_URL = "https://script.google.com/macros/s/AKfycbwtYeXoa1hqV8grjnh03SstVd1MqT5JMn_nVQJPACRjUhyBMX3YCmhJzg/exec";
 
 async function getData(mode = 1, base_url = BASE_URL) {
   screenLock();
 
   const url = `${base_url}?mode=${mode}`;
-  const res = await fetch(url, {
-    method: 'GET',
-    mode: 'no-cors'
-  })
+  const res = await fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();

@@ -28,8 +28,8 @@ function doPost(postdata) {
           output_obj.success = 0;
         }
         output = ContentService.createTextOutput();
-        // output.setMimeType(ContentService.MimeType.JSON);
-        output.setMimeType(ContentService.MimeType.TEXT);
+        output.setMimeType(ContentService.MimeType.JSON);
+        // output.setMimeType(ContentService.MimeType.TEXT);
         output.setContent(JSON.stringify(output_obj));
         break;
       default:
@@ -48,7 +48,6 @@ function doPost(postdata) {
 }
 
 function doGet(getdata) {
-  setProperties();
   let output_obj = { success: 0, error_message: "this is initial error message." };
   try {
     console.log("doGet START\n");
@@ -97,8 +96,8 @@ function doGet(getdata) {
     output_obj.error_message = error.message;
   } finally {
     let output = ContentService.createTextOutput();
-    // output.setMimeType(ContentService.MimeType.JSON);
-    output.setMimeType(ContentService.MimeType.TEXT);
+    output.setMimeType(ContentService.MimeType.JSON);
+    // output.setMimeType(ContentService.MimeType.TEXT);
     output.setContent(JSON.stringify(output_obj));
 
     console.log("doGet ENDED\n");
