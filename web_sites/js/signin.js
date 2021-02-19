@@ -1,6 +1,6 @@
 'use strict';
-// const BASE_URL = "https://script.google.com/macros/s/AKfycbzFPVa55eHOhBEGszrKbLOZi7Tr2NTme82t8ZXXqQ/exec";
-const BASE_URL = "https://script.google.com/macros/s/AKfycbyW-9RNS4XyVR-Q3__DPA_yxA5xYwNTgnen9Nf2Jyyb-h4LvJun/exec";
+const BASE_URL = "https://script.google.com/macros/s/AKfycbwtYeXoa1hqV8grjnh03SstVd1MqT5JMn_nVQJPACRjUhyBMX3YCmhJzg/exec"
+
 const signout_button = document.getElementById('signout_button');
 let is_admin_account = 0;
 
