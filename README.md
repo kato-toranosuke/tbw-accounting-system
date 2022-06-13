@@ -2,6 +2,13 @@
 つくば鳥人間の会の会計システムです。<br>
 Google SpreadsheetをDBとして扱う、システムです。
 
+## システム概要
+![acc_sys](https://user-images.githubusercontent.com/53859593/173289640-9b608320-ced6-4e58-8e36-95d01f58f47f.jpeg)
+
+## 画面
+<img width="1792" alt="kaikei_0" src="https://user-images.githubusercontent.com/53859593/173290935-c5522117-b339-4aa9-9956-2b8e679c7b97.png">
+<img width="1791" alt="kaikei_1" src="https://user-images.githubusercontent.com/53859593/173290946-49a90e99-2a94-42e1-a1a6-abfbe4b65cb0.png">
+
 ## 必要な技術
 - JavaScript
 - Google Apps Script
